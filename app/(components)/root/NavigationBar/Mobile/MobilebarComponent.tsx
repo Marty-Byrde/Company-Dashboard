@@ -8,15 +8,15 @@ import ColorModeSwitcher from '@/app/(components)/root/NavigationBar/ColorModeSw
 
 const MobilebarComponentContext = createContext({})
 
-export default function MobilebarComponent({ title, children }: { title: string, children: React.JSX.Element | React.JSX.Element[] }) {
+export default function MobilebarComponent({ title, children }: { title: string; children: React.JSX.Element | React.JSX.Element[] }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
     <MobilebarComponentContext.Provider value={{ sidebarOpen, setSidebarOpen }}>
       <MobilebarComponent.Header>
-        <MobilebarComponent.CloseButton/>
+        <MobilebarComponent.CloseButton />
         <div className='flex-1 text-center text-lg font-semibold leading-6 text-gray-700 dark:text-gray-200'>{title}</div>
-        <ColorModeSwitcher className='text-gray-700 dark:text-gray-200'/>
+        <ColorModeSwitcher className='text-gray-700 dark:text-gray-200' />
       </MobilebarComponent.Header>
 
       <MobilebarComponent.Dialog>{children}</MobilebarComponent.Dialog>
@@ -26,7 +26,7 @@ export default function MobilebarComponent({ title, children }: { title: string,
 
 // eslint-disable-next-line react/display-name
 MobilebarComponent.Header = ({ children }: { children: React.JSX.Element | React.JSX.Element[] }) => (
-  <div className='sticky top-0 z-40 flex select-text items-center gap-x-6 bg-white px-4 py-4 shadow-sm dark:bg-neutral-800 sm:px-6 lg:hidden'>{children}</div>
+  <div className='sticky top-0 z-40 flex select-text items-center gap-x-6 bg-white px-4 py-4 shadow-sm sm:px-6 lg:hidden dark:border-b dark:border-neutral-600 dark:bg-neutral-800/80'>{children}</div>
 )
 
 // eslint-disable-next-line react/display-name
@@ -36,9 +36,9 @@ MobilebarComponent.CloseButton = () => {
   const { setSidebarOpen }: { setSidebarOpen: ReactState<boolean>['setState'] } = useContext(MobilebarComponentContext)
 
   return (
-    <button type='button' className='-m-2.5 p-2.5 text-gray-700 dark:text-gray-200 lg:hidden' onClick={() => setSidebarOpen(true)}>
+    <button type='button' className='-m-2.5 p-2.5 text-gray-700 lg:hidden dark:text-gray-200' onClick={() => setSidebarOpen(true)}>
       <span className='sr-only'>Open sidebar</span>
-      <Bars3Icon className='h-6 w-6' aria-hidden='true'/>
+      <Bars3Icon className='h-6 w-6' aria-hidden='true' />
     </button>
   )
 }
@@ -60,7 +60,7 @@ MobilebarComponent.Dialog = ({ children }: { children: React.JSX.Element | React
           leave='transition-opacity ease-linear duration-300'
           leaveFrom='opacity-100'
           leaveTo='opacity-0'>
-          <div className='fixed inset-0 bg-gray-900/80'/>
+          <div className='fixed inset-0 bg-gray-900/80' />
         </Transition.Child>
 
         <div className='fixed inset-0 flex'>
@@ -78,7 +78,7 @@ MobilebarComponent.Dialog = ({ children }: { children: React.JSX.Element | React
                   <button type='button' className='-m-2.5 p-2.5' onClick={() => setSidebarOpen(false)}>
                     <span className='sr-only'>Close sidebar</span>
 
-                    <XMarkIcon className='h-6 w-6 text-black dark:text-gray-50' aria-hidden='true'/>
+                    <XMarkIcon className='h-6 w-6 text-black dark:text-gray-50' aria-hidden='true' />
                   </button>
                 </div>
               </Transition.Child>
