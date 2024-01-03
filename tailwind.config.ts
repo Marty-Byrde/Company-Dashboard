@@ -21,7 +21,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/container-queries'),],
   darkMode: 'class',
 }
 export default config
