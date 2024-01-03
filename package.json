@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@algolia/autocomplete-core": "^1.13.0",
     "@auth/mongodb-adapter": "^2.0.10",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
@@ -19,6 +20,7 @@
     "nookies": "^2.5.2",
     "react": "^18",
     "react-dom": "^18",
+    "react-highlight-words": "^0.20.0",
     "sharp": "^0.33.0",
     "tailwind-merge": "^2.1.0",
     "uuid": "^9.0.1"
@@ -27,6 +29,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-highlight-words": "^0.16.7",
     "@types/uuid": "^9.0.7",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",

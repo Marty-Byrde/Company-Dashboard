@@ -21,7 +21,7 @@
     "paths": {
       "@/*": ["./*"],
       "@/app/*": ["./app/*"],
-      "@/components/*": ["./app/(components)"],
+      "@/components/*": ["./app/(components)/*"],
       "@/api/*": ["./app/api/*"],
       "@/lib/*": ["./lib/*"],
       "@/typings/*": ["./typings/*"],
