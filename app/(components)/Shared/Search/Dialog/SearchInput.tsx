@@ -2,7 +2,7 @@ import { MutableRefObject, useContext } from 'react'
 import LoadingIcon from '@/components/Shared/Filtering/DialogSubcomponents/LoadingIcon'
 import SearchIcon from '@/components/Shared/Filtering/DialogSubcomponents/SearchIcon'
 import { twMerge } from 'tailwind-merge'
-import { SearchDialogContext } from '@/components/Shared/Filtering/SearchDialog'
+import { SearchDialogContext } from '@/components/Shared/Search/SearchDialog'
 
 export default function SearchInput({ onClose, inputRef }: { onClose: () => void; inputRef: MutableRefObject<null> }) {
   const { autocompleteState, autocomplete } = useContext(SearchDialogContext)

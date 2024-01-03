@@ -1,6 +1,6 @@
-import { usePathname, useSearchParams } from "next/navigation"
-import { useContext, useEffect } from "react"
-import { SearchDialogContext } from "@/components/Shared/Filtering/SearchDialog"
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useContext, useEffect } from 'react'
+import { SearchDialogContext } from '@/components/Shared/Search/SearchDialog'
 
 export default function CloseOnNavigation() {
   const { close, autocomplete } = useContext(SearchDialogContext)

@@ -1,7 +1,7 @@
 import { Fragment, useContext, useId } from 'react'
-import HighlightQuery from '@/components/Shared/Filtering/DialogSubcomponents/HighlightQuery'
-import { SearchItem } from '@/components/Shared/Filtering/Search'
-import { SearchDialogContext } from '@/components/Shared/Filtering/SearchDialog'
+import HighlightQuery from '@/components/Shared/Search/Dialog/HighlightQuery'
+import { SearchItem } from '@/components/Shared/Search/SearchBox'
+import { SearchDialogContext } from '@/components/Shared/Search/SearchDialog'
 
 export default function SearchResult({ item, query }: { item: SearchItem; query: string }) {
   const { autocomplete, autocompleteState } = useContext(SearchDialogContext)
