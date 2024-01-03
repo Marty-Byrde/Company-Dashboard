@@ -3,11 +3,10 @@
 import { Context, createContext, MutableRefObject, useContext, useRef, useState } from 'react'
 
 import SearchIcon from '@/components/Shared/Filtering/DialogSubcomponents/SearchIcon'
-import SearchDialog from '@/components/Shared/Filtering/SearchDialog'
-import DisplayKBD from '@/components/Shared/Filtering/ExternalizedFC/DisplayKBD'
+import SearchDialog from '@/components/Shared/Search/SearchDialog'
+import DisplayKBD from '@/components/Shared/Search/DisplayKBD'
 import { twMerge } from 'tailwind-merge'
 import ReactState from '@/typings/ReactState'
-// import SearchButton from "@/components/Shared/Filtering/SearchButton"
 import BaseProps from '@/typings/BaseProps'
 import { BaseItem } from '@algolia/autocomplete-core'
 
@@ -57,7 +56,7 @@ export interface SearchProps {
  * @param item The array of SearchItems that are available for filtering by the user
  * @constructor
  */
-export default function Search({ shortCutKey, placeHolder, iconOnly, items }: SearchProps) {
+export default function SearchBox({ shortCutKey, placeHolder, iconOnly, items }: SearchProps) {
   const [filter, setFilter] = useState<SearchItem[]>(items)
   const [isOpen, setOpen] = useState<boolean>(false)
   const buttonRef = useRef(null)

@@ -1,6 +1,6 @@
-import SearchResult from '@/components/Shared/Filtering/DialogSubcomponents/SearchResult'
+import SearchResult from '@/components/Shared/Search/Dialog/SearchResult'
 import { useContext } from 'react'
-import { SearchDialogContext } from '@/components/Shared/Filtering/SearchDialog'
+import { SearchDialogContext } from '@/components/Shared/Search/SearchDialog'
 
 export default function SearchResults() {
   const { autocomplete, autocompleteState } = useContext(SearchDialogContext)

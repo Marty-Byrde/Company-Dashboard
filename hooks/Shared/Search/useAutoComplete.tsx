@@ -1,7 +1,7 @@
 import { AutocompleteState, createAutocomplete } from '@algolia/autocomplete-core'
 import { useCallback, useContext, useId, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { SearchContext, SearchItem } from '@/components/Shared/Filtering/Search'
+import { SearchContext, SearchItem } from '@/components/Shared/Search/SearchBox'
 
 export function useAutocomplete() {
   const {

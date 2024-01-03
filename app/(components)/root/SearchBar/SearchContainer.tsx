@@ -1,7 +1,7 @@
 'use client'
 
 import { GlobalColorSettings } from '@/lib/root/ColorSettings'
-import Search, { SearchItem } from '@/components/Shared/Filtering/Search'
+import SearchBox, { SearchItem } from '@/components/Shared/Search/SearchBox'
 import { twMerge } from 'tailwind-merge'
 
 const { lightBackground, darkBackground } = GlobalColorSettings
@@ -13,7 +13,7 @@ export default function SearchContainer({ title, className, items }: { title?: s
       key={lightBackground + darkBackground}>
       <span className={twMerge('flex-1 text-lg', className, title ?? 'hidden')}>{title}</span>
       <div className='flex max-w-md flex-1 items-center gap-4'>
-        <Search items={items} shortCutKey='i' />
+        <SearchBox items={items} shortCutKey='i' />
       </div>
     </div>
   )

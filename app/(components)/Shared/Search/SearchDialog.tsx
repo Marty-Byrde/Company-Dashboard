@@ -1,10 +1,10 @@
 import { Context, createContext, Suspense, useCallback, useContext, useEffect, useRef } from 'react'
 import { useAutocomplete } from '@/hooks/Shared/Search/useAutoComplete'
-import CloseOnNavigation from '@/components/Shared/Filtering/DialogSubcomponents/CloseOnNavigation'
+import CloseOnNavigation from '@/components/Shared/Search/Dialog/CloseOnNavigation'
 import { Dialog } from '@headlessui/react'
-import SearchInput from '@/components/Shared/Filtering/DialogSubcomponents/SearchInput'
-import SearchResults from '@/components/Shared/Filtering/DialogSubcomponents/SearchResults'
-import { SearchContext } from '@/components/Shared/Filtering/Search'
+import SearchInput from '@/components/Shared/Search/Dialog/SearchInput'
+import SearchResults from '@/components/Shared/Search/Dialog/SearchResults'
+import { SearchContext } from '@/components/Shared/Search/SearchBox'
 
 interface SearchDialogContextProps extends ReturnType<typeof useAutocomplete> {}
 
