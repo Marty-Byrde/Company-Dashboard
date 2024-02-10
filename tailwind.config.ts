@@ -24,7 +24,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('@tailwindcss/container-queries'),],
+  plugins: [require('@tailwindcss/container-queries'), require('@tailwindcss/forms')],
   darkMode: 'class',
 }
 export default config
