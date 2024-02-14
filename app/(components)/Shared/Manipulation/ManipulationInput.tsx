@@ -1,12 +1,16 @@
 import { NonNullable } from '@/typings/NonNullable'
 import ObjectPath from '@/typings/ObjectPath'
 import React, { InputHTMLAttributes, useEffect, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { useManipulationProvider } from './ManipulationContainer'
 
 interface ManipulationInputProps<T> {
   label?: string
   path: ObjectPath<NonNullable<T>>
   hidden?: boolean
+  containerClassName?: string
+  inputClassName?: string
+  labelClassName?: string
 }
 
 /**
@@ -15,7 +19,7 @@ interface ManipulationInputProps<T> {
  * @param path The path to the property that should be updated and displayed
  * @returns
  */
-export function ManipulationInput<T>({ label, path, hidden }: ManipulationInputProps<T>) {
+export function ManipulationInput<T>({ label, path, hidden, containerClassName, labelClassName, inputClassName }: ManipulationInputProps<T>) {
   const { object, setObject, debounce } = useManipulationProvider<T>()
   const [_internal, _setInteral] = useState<T>(object)
 
@@ -69,12 +73,12 @@ export function ManipulationInput<T>({ label, path, hidden }: ManipulationInputP
   }
 
   return (
-    <div className='flex max-w-fit items-center gap-4 rounded-md bg-neutral-700 px-3 py-1.5'>
-      <label className='text-lg' htmlFor={path.toString()}>
+    <div className={twMerge('flex max-w-fit items-center gap-4 rounded-md bg-neutral-700 px-3 py-1.5', containerClassName)}>
+      <label className={twMerge('text-lg', labelClassName)} htmlFor={path.toString()}>
         {label ?? path?.split('.')?.at(-1)?.toString() ?? path}:
       </label>
 
-      <input type={inputType()} className='rounded-md dark:bg-neutral-700/40 ' id={path.toString()} onChange={onChange} defaultValue={String(defaultValue)} />
+      <input type={inputType()} className={twMerge('rounded-md dark:bg-neutral-700/40', inputClassName)} id={path.toString()} onChange={onChange} defaultValue={String(defaultValue)} />
     </div>
   )
 }
