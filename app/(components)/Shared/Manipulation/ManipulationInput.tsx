@@ -1,10 +1,12 @@
+import { NonNullable } from '@/typings/NonNullable'
 import ObjectPath from '@/typings/ObjectPath'
 import React, { InputHTMLAttributes, useEffect, useState } from 'react'
 import { useManipulationProvider } from './ManipulationContainer'
 
 interface ManipulationInputProps<MainObj> {
   label?: string
-  path: ObjectPath<MainObj>
+  path: ObjectPath<NonNullable<MainObj>>
+  hidden?: boolean
 }
 
 /**
@@ -13,7 +15,7 @@ interface ManipulationInputProps<MainObj> {
  * @param path The path to the property that should be updated and displayed
  * @returns
  */
-export function ManipulationInput<MainObj>({ label, path }: ManipulationInputProps<MainObj>) {
+export function ManipulationInput<MainObj>({ label, path, hidden }: ManipulationInputProps<MainObj>) {
   const { object: main, setObject, debounce } = useManipulationProvider<MainObj>()
   const [_internal, _setInteral] = useState<MainObj>(main)
 
@@ -26,6 +28,9 @@ export function ManipulationInput<MainObj>({ label, path }: ManipulationInputPro
     return () => clearTimeout(timeout)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_internal])
+
+  // In case the object is null or the input is hidden, then the input should not be rendered
+  if (main === null || hidden) return null
 
   //* Get the current value of the requested property
   //@ts-ignore
@@ -49,7 +54,7 @@ export function ManipulationInput<MainObj>({ label, path }: ManipulationInputPro
         return
     }
 
-    _setInteral(updateObjectByPath(main, path, value))
+    _setInteral(updateObjectByPath(main!, path, value))
   }
 
   const inputType = (): InputHTMLAttributes<HTMLInputElement>['type'] => {
