@@ -73,12 +73,12 @@ export function ManipulationInput<T>({ label, path, hidden, containerClassName, 
   }
 
   return (
-    <div className={twMerge('flex max-w-fit items-center gap-4 rounded-md bg-neutral-700 px-3 py-1.5', containerClassName)}>
+    <div className={twMerge('flex items-center gap-4 rounded-md bg-neutral-700 px-3 py-1.5', containerClassName)}>
       <label className={twMerge('text-lg', labelClassName)} htmlFor={path.toString()}>
         {label ?? path?.split('.')?.at(-1)?.toString() ?? path}:
       </label>
 
-      <input type={inputType()} className={twMerge('rounded-md dark:bg-neutral-700/40', inputClassName)} id={path.toString()} onChange={onChange} defaultValue={String(defaultValue)} />
+      <input type={inputType()} className={twMerge('flex-1 rounded-md dark:bg-neutral-700/40', inputClassName)} id={path.toString()} onChange={onChange} defaultValue={String(defaultValue)} />
     </div>
   )
 }
