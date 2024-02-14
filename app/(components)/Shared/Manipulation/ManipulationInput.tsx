@@ -3,9 +3,9 @@ import ObjectPath from '@/typings/ObjectPath'
 import React, { InputHTMLAttributes, useEffect, useState } from 'react'
 import { useManipulationProvider } from './ManipulationContainer'
 
-interface ManipulationInputProps<MainObj> {
+interface ManipulationInputProps<T> {
   label?: string
-  path: ObjectPath<NonNullable<MainObj>>
+  path: ObjectPath<NonNullable<T>>
   hidden?: boolean
 }
 
@@ -15,9 +15,9 @@ interface ManipulationInputProps<MainObj> {
  * @param path The path to the property that should be updated and displayed
  * @returns
  */
-export function ManipulationInput<MainObj>({ label, path, hidden }: ManipulationInputProps<MainObj>) {
-  const { object: main, setObject, debounce } = useManipulationProvider<MainObj>()
-  const [_internal, _setInteral] = useState<MainObj>(main)
+export function ManipulationInput<T>({ label, path, hidden }: ManipulationInputProps<T>) {
+  const { object, setObject, debounce } = useManipulationProvider<T>()
+  const [_internal, _setInteral] = useState<T>(object)
 
   //* Debounce the object update
   useEffect(() => {
@@ -30,11 +30,11 @@ export function ManipulationInput<MainObj>({ label, path, hidden }: Manipulation
   }, [_internal])
 
   // In case the object is null or the input is hidden, then the input should not be rendered
-  if (main === null || hidden) return null
+  if (object === null || hidden) return null
 
   //* Get the current value of the requested property
   //@ts-ignore
-  const defaultValue = path.split('.').reduce((acc, curr) => acc[curr], main)
+  const defaultValue = path.split('.').reduce((acc, curr) => acc[curr], object)
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     let value: string | number | boolean = defaultValue!.toString()
@@ -54,7 +54,7 @@ export function ManipulationInput<MainObj>({ label, path, hidden }: Manipulation
         return
     }
 
-    _setInteral(updateObjectByPath(main!, path, value))
+    _setInteral(updateObjectByPath(object!, path, value))
   }
 
   const inputType = (): InputHTMLAttributes<HTMLInputElement>['type'] => {
