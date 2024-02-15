@@ -73,9 +73,15 @@ export function ManipulationInput<T>({ label, path, hidden, containerClassName, 
   }
 
   return (
-    <div className={twMerge('flex items-center gap-4 rounded-md bg-neutral-700 px-3 py-1.5', containerClassName)}>
-      <label className={twMerge('text-lg', labelClassName)} htmlFor={path.toString()}>
-        {label ?? path?.split('.')?.at(-1)?.toString() ?? path}:
+    <div className={twMerge('flex items-center gap-6 rounded-md bg-neutral-700 px-3 py-1.5', containerClassName)}>
+      <label className={twMerge('relative text-lg', labelClassName)} htmlFor={path.toString()}>
+        {label ?? path?.split('.')?.at(-1)?.toString() ?? path}
+        {inputProps.required && (
+          <span className='absolute -right-2 -top-1 text-sm dark:text-red-300' title='required'>
+            *
+          </span>
+        )}
+        :
       </label>
 
       <input
