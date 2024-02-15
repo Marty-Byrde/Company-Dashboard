@@ -4,7 +4,7 @@ import React, { InputHTMLAttributes, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useManipulationProvider } from './ManipulationContainer'
 
-interface ManipulationInputProps<T> {
+interface ManipulationInputProps<T> extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onClick' | 'className' | 'onChange' | 'id' | 'type'> {
   label?: string
   path: ObjectPath<NonNullable<T>>
   hidden?: boolean
@@ -19,7 +19,7 @@ interface ManipulationInputProps<T> {
  * @param path The path to the property that should be updated and displayed
  * @returns
  */
-export function ManipulationInput<T>({ label, path, hidden, containerClassName, labelClassName, inputClassName }: ManipulationInputProps<T>) {
+export function ManipulationInput<T>({ label, path, hidden, containerClassName, labelClassName, inputClassName, ...inputProps }: ManipulationInputProps<T>) {
   const { object, setObject, debounce } = useManipulationProvider<T>()
   const [_internal, _setInteral] = useState<T>(object)
 
@@ -78,7 +78,15 @@ export function ManipulationInput<T>({ label, path, hidden, containerClassName, 
         {label ?? path?.split('.')?.at(-1)?.toString() ?? path}:
       </label>
 
-      <input type={inputType()} className={twMerge('flex-1 rounded-md dark:bg-neutral-700/40', inputClassName)} id={path.toString()} onChange={onChange} defaultValue={String(defaultValue)} />
+      <input
+        placeholder={label}
+        {...inputProps}
+        type={inputType()}
+        className={twMerge('flex-1 rounded-md dark:bg-neutral-700/40 dark:placeholder:text-gray-300/40', inputClassName)}
+        id={path.toString()}
+        onChange={onChange}
+        defaultValue={String(defaultValue)}
+      />
     </div>
   )
 }
