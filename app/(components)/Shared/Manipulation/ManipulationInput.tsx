@@ -88,7 +88,7 @@ export function ManipulationInput<T>({ label, path, hidden, containerClassName, 
         placeholder={label}
         {...inputProps}
         type={inputType()}
-        className={twMerge('flex-1 rounded-md dark:bg-neutral-700/40 dark:placeholder:text-gray-300/40', 'invalid:border-red-400 invalid:ring-1 invalid:ring-red-400', inputClassName)}
+        className={twMerge('min-w-10 flex-1 rounded-md dark:bg-neutral-700/40 dark:placeholder:text-gray-300/40', 'invalid:border-red-400 invalid:ring-1 invalid:ring-red-400', inputClassName)}
         id={path.toString()}
         onChange={onChange}
         defaultValue={String(defaultValue)}
