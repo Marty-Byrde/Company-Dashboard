@@ -4,7 +4,7 @@ import React, { InputHTMLAttributes, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useManipulationProvider } from './ManipulationContainer'
 
-interface ManipulationInputProps<T> extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onClick' | 'className' | 'onChange' | 'id' | 'type'> {
+interface ManipulationInputProps<T> extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onClick' | 'className' | 'onChange' | 'id'> {
   label?: string
   path: ObjectPath<NonNullable<T>>
   hidden?: boolean
@@ -86,9 +86,14 @@ export function ManipulationInput<T>({ label, path, hidden, containerClassName, 
 
       <input
         placeholder={label}
-        {...inputProps}
         type={inputType()}
-        className={twMerge('min-w-10 flex-1 rounded-md dark:bg-neutral-700/40 dark:placeholder:text-gray-300/40', 'invalid:border-red-400 invalid:ring-1 invalid:ring-red-400', inputClassName)}
+        {...inputProps}
+        className={twMerge(
+          'min-w-4 flex-1 rounded-md dark:bg-neutral-700/40 dark:placeholder:text-gray-300/40',
+          'invalid:border-red-400 invalid:ring-1 invalid:ring-red-400',
+          inputProps.type === 'radio' ? 'max-w-4 checked:border-gray-700 checked:bg-blue-600 dark:checked:border-gray-400 checked:dark:bg-blue-600 ' : null,
+          inputClassName,
+        )}
         id={path.toString()}
         onChange={onChange}
         defaultValue={String(defaultValue)}
