@@ -74,7 +74,7 @@ export function ManipulationInput<T>({ label, path, hidden, containerClassName, 
 
   return (
     <div className={twMerge('flex items-center gap-6 rounded-md bg-neutral-700 px-3 py-1.5', containerClassName)}>
-      <label className={twMerge('relative text-lg', labelClassName)} htmlFor={path.toString()}>
+      <label className={twMerge('relative text-lg dark:text-gray-200', labelClassName)} htmlFor={path.toString()}>
         {label ?? path?.split('.')?.at(-1)?.toString() ?? path}
         {inputProps.required && (
           <span className='absolute -right-2 -top-1 text-sm dark:text-red-300' title='required'>
@@ -89,6 +89,7 @@ export function ManipulationInput<T>({ label, path, hidden, containerClassName, 
         type={inputType()}
         {...inputProps}
         className={twMerge(
+          'dark:text-gray-300',
           'min-w-4 flex-1 rounded-md dark:bg-neutral-700/40 dark:placeholder:text-gray-300/40',
           'invalid:border-red-400 invalid:ring-1 invalid:ring-red-400',
           inputProps.type === 'radio' ? 'max-w-4 checked:border-gray-700 checked:bg-blue-600 dark:checked:border-gray-400 checked:dark:bg-blue-600 ' : null,
