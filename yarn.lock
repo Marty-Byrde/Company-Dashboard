@@ -5236,10 +5236,10 @@ woocommerce-api@^1.4.2:
     oauth-1.0a "2.2.6"
     request "2.88.0"
 
-woocommerce-utils@^1.0.1:
-  version "1.0.1"
-  resolved "http://10.0.100.10:4873/woocommerce-utils/-/woocommerce-utils-1.0.1.tgz#ec37b8c036133a61fbe903ecb871c1f97dd18622"
-  integrity sha512-PA3X+nC4kDkGJta36ysydlBrDS2fXS6hcZW/g18US57x69tqj0E3PV2LD7BnSFXt4n1TQRAQbE30W/5Y4OmtAA==
+woocommerce-utils@1.0.2:
+  version "1.0.2"
+  resolved "http://10.0.100.10:4873/woocommerce-utils/-/woocommerce-utils-1.0.2.tgz#60907bcb43202c11b2a957c182903b5e8d2ebdc8"
+  integrity sha512-430qB9b1/b7ZwQe0tO/yScjFjHJ4mbzyzBllzKd8M2bqJnJLdYbR6wu4EP7ws8roE5TzQHIoORq/p0FbFePTPw==
   dependencies:
     "@woocommerce/woocommerce-rest-api" "^1.0.1"
     fetch "^1.1.0"
