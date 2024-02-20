@@ -17,9 +17,9 @@ export default function SlideOver({ title, maxWidth, children }: SlideOverProps)
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as='div' className='relative z-50' onClose={close}>
-        <div className='fixed inset-0 bottom-0 left-0 right-0 top-16 overflow-hidden lg:left-72 lg:top-0 '>
+        <div className='fixed inset-0 bottom-0 left-0 right-0 top-14 overflow-hidden lg:left-72 lg:top-0 '>
           <div className='absolute inset-0 overflow-hidden '>
-            <div className='pointer-events-none fixed inset-y-0 left-0 right-0 top-16 flex max-w-full sm:left-[auto] lg:top-0 lg:pl-16'>
+            <div className='pointer-events-none fixed inset-y-0 left-0 right-0 top-14 flex max-w-full sm:left-[auto] lg:top-0 lg:pl-16'>
               <Transition.Child
                 as={Fragment}
                 enter='transform transition ease-in-out duration-500 sm:duration-700'
