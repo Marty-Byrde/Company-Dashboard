@@ -91,10 +91,10 @@ export default function DisplayOrder({ order, href }: { order: Order; href: stri
 /**
  * Returns the 'column' headers for the fields of each order.
  */
-export function DisplayOrderHeaders() {
+export function DisplayOrderHeaders({ className }: { className?: string }) {
   return (
     <div className='@container'>
-      <div className='headers -mb-1.5 flex w-full gap-4 rounded-t-md px-3 py-2 font-semibold @lg:gap-8 dark:bg-neutral-900/80'>
+      <div className={twMerge('flex w-full gap-4 rounded-t-md px-3 py-2 font-semibold @lg:gap-8 dark:bg-neutral-900/80', className)}>
         <span className={visibilities.id}>Nr.</span>
         {/*the margins classes are used to center the status-column-label when the indicator is shown, then to align it with status idicator and status-label*/}
         <span className={twMerge(visibilities.status, '-ml-6 -mr-4 @xl:-mr-0 @xl:ml-0')}>Status</span>
