@@ -77,3 +77,23 @@ function convertAddress({ addess: initialAddress }: { addess: string }) {
 
   return { street, houseNumber }
 }
+
+/**
+ * Checks if the billing and shipping addresses are different
+ * @param billing
+ * @param shipping
+ */
+export function hasDifferentAddresses({ order }: { order: Order | null }) {
+  if (!order) return false
+  const { billing, shipping } = order
+
+  return (
+    billing.first_name !== shipping.first_name ||
+    billing.last_name !== shipping.last_name ||
+    billing.address_1 !== shipping.address_1 ||
+    billing.address_2 !== shipping.address_2 ||
+    billing.city !== shipping.city ||
+    billing.postcode !== shipping.postcode ||
+    billing.country !== shipping.country
+  )
+}
