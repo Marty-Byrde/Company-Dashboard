@@ -2,9 +2,8 @@
 import useContextHandler from '@/hooks/Shared/Context/useContextHandler'
 import ReactState from '@/typings/ReactState'
 import { Customer } from 'hellocash-api/typings/Customer'
-import { createContext, ReactNode, useEffect, useState } from 'react'
+import { createContext, ReactNode, useId, useState } from 'react'
 import Order from 'woocommerce-utils/helper/typings/Order'
-import convertContactInformations from '@/lib/orders/ConvertContactInformations'
 
 interface CustomerRegistrationContextProps {
   order: Order | null
@@ -31,15 +30,9 @@ export default function RegistrationProvider({ children }: { children: ReactNode
   const [order, setOrder] = useState<CustomerRegistrationContextProps['order']>(null)
   const [baseInformation, setBaseInformation] = useState<CustomerRegistrationContextProps['baseInformation']>('billing')
 
-  useEffect(() => {
-    if (!order) return setCustomer(null)
-    setCustomer(convertContactInformations(order[baseInformation]))
-  }, [order])
-
-  useEffect(() => {
-    if (!order) return setCustomer(null)
-    setCustomer(convertContactInformations(order[baseInformation]))
-  }, [baseInformation])
-
-  return <Context.Provider value={{ customer, setCustomer, baseInformation, setBaseInformation, order, setOrder }}>{children}</Context.Provider>
+  return (
+    <Context.Provider key={useId()} value={{ customer, setCustomer, baseInformation, setBaseInformation, order, setOrder }}>
+      {children}
+    </Context.Provider>
+  )
 }
