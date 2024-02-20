@@ -30,8 +30,8 @@ export default function SlideOver({ title, maxWidth, children }: SlideOverProps)
                 leaveTo='translate-y-full sm:translate-y-0 sm:translate-x-full'>
                 <Dialog.Panel className={twMerge('pointer-events-auto max-w-md', maxWidth)}>
                   <div className='flex h-full flex-col overflow-y-auto overflow-x-hidden overscroll-none scroll-smooth bg-gray-100 shadow-md shadow-gray-400 dark:bg-neutral-800 dark:shadow-neutral-700'>
-                    <div className='sticky right-0 top-0 z-10 mb-4 flex w-full items-center justify-between border-b-2 border-neutral-300 px-4 py-2 pb-2 dark:border-b-neutral-700 dark:bg-neutral-800'>
-                      <h2 className='text-xl font-semibold text-gray-500 dark:text-gray-200'>{title}</h2>
+                    <div className='sticky right-0 top-0 z-10 mb-4 flex w-full items-center justify-between border-b-2 border-neutral-600 bg-neutral-200 px-4 py-2 pb-2 dark:border-neutral-300 dark:border-b-neutral-700 dark:bg-neutral-800'>
+                      <h2 className='text-xl font-semibold text-gray-700 dark:text-gray-200'>{title}</h2>
                       <button
                         type='button'
                         className='relative rounded-md bg-gray-100/50 text-gray-400 ring-2 ring-transparent hover:text-gray-500 hover:ring-gray-300 dark:bg-neutral-700/40 dark:hover:text-gray-300 dark:hover:ring-neutral-700 dark:active:ring-gray-400'
