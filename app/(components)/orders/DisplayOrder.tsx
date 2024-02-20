@@ -13,11 +13,11 @@ import convertContactInformations from '@/lib/orders/ConvertContactInformations'
  */
 const visibilities = {
   id: 'min-w-12',
-  status: 'hidden @lg:block',
-  date: 'hidden @3xl:block',
+  status: 'hidden @lg:block @xl:min-w-[6.5rem]',
+  date: 'hidden @3xl:block min-w-[5.5rem]',
   name: 'overflow-hidden  flex-1',
-  total: 'hidden @4xl:block',
-  actions: 'min-w-12 @2xl:min-w-[8.5rem]',
+  total: 'hidden @4xl:block min-w-24',
+  actions: 'min-w-12 @2xl:min-w-[9rem]',
 }
 
 /**
@@ -93,14 +93,16 @@ export default function DisplayOrder({ order, href }: { order: Order; href: stri
  */
 export function DisplayOrderHeaders() {
   return (
-    <div className='headers -mb-1.5 flex w-full gap-4 rounded-t-md px-4 py-2 font-semibold  @container @lg:gap-8 dark:bg-neutral-900/80'>
-      <span className={visibilities.id}>Nr.</span>
-      {/*the margins classes are used to center the status-column-label when the indicator is shown, then to align it with status idicator and status-label*/}
-      <span className={twMerge(visibilities.status, '-ml-6 -mr-4 @xl:ml-0 @xl:mr-0 @xl:min-w-[6.5rem]')}>Status</span>
-      <span className={twMerge(visibilities.date, 'min-w-20')}>Date</span>
-      <span className={twMerge(visibilities.name, '')}>Name</span>
-      <span className={twMerge(visibilities.total, 'min-w-16')}>Total</span>
-      <span className='min-w-12 @2xl:min-w-[8.5rem]'>Actions</span>
+    <div className='@container'>
+      <div className='headers -mb-1.5 flex w-full gap-4 rounded-t-md px-3 py-2 font-semibold @lg:gap-8 dark:bg-neutral-900/80'>
+        <span className={visibilities.id}>Nr.</span>
+        {/*the margins classes are used to center the status-column-label when the indicator is shown, then to align it with status idicator and status-label*/}
+        <span className={twMerge(visibilities.status, '-ml-6 -mr-4 @xl:-mr-0 @xl:ml-0')}>Status</span>
+        <span className={twMerge(visibilities.date)}>Date</span>
+        <span className={twMerge(visibilities.name)}>Name</span>
+        <span className={twMerge(visibilities.total)}>Total</span>
+        <span className={twMerge(visibilities.actions)}>Actions</span>
+      </div>
     </div>
   )
 }
