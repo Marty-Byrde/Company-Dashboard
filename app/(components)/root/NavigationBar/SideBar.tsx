@@ -15,16 +15,17 @@ export default async function SideBar() {
     elements: [
       { name: 'Home', icon: 'HomeIcon', href: '/' },
       {
-        name: 'Browse',
+        name: 'Orders',
         icon: 'FolderIcon',
-        href: '#'
-      }]
+        href: '/orders',
+      },
+    ],
   }
   const managementElements: SideElementProps[] = [
     {
       icon: 'LockOpenIcon',
       name: 'Management',
-      href: '/manage'
+      href: '/manage',
     },
   ]
 
