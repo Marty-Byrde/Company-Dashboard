@@ -3,10 +3,10 @@ import Order from 'woocommerce-utils/helper/typings/Order'
 import { ArrowTopRightOnSquareIcon, Cog6ToothIcon } from '@heroicons/react/24/outline'
 import { useCustomerSlideOverContext } from '@/components/orders/RegistrationProvider'
 import { useSlideOver } from '@/components/Shared/Slideover/SlideoverProvider'
-import convertContactInformations from '@/lib/orders/ConvertContactInformations'
 import structureClasses from '@/lib/Shared/structureClasses'
 import { twMerge } from 'tailwind-merge'
 import Link from 'next/link'
+import convertContactInformations from '@/lib/orders/ConvertContactInformations'
 
 /**
  * The visibilities of the order fields and headers.
@@ -27,7 +27,7 @@ const visibilities = {
  * @constructor
  */
 export default function DisplayOrder({ order, href }: { order: Order; href: string }) {
-  const { setCustomer } = useCustomerSlideOverContext()
+  const { setOrder, setCustomer } = useCustomerSlideOverContext()
   const { setOpen } = useSlideOver()
 
   const OpenButton = () => {
@@ -41,6 +41,7 @@ export default function DisplayOrder({ order, href }: { order: Order; href: stri
 
   const EditButton = () => {
     const onClick = () => {
+      setOrder(order)
       setCustomer(convertContactInformations(order.billing))
       setOpen(true)
     }
