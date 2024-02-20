@@ -32,7 +32,7 @@ export default function DisplayOrder({ order, href }: { order: Order; href: stri
 
   const OpenButton = () => {
     return (
-      <Link target='_blank' href={href} className='mx-1 my-1 rounded-md border px-2 py-2 @2xl:m-0 @2xl:px-4 dark:border-gray-500'>
+      <Link target='_blank' href={href} className='mx-1 my-1 rounded-md border border-gray-400 px-2 py-2 @2xl:m-0 @2xl:px-4 dark:border-gray-500'>
         <ArrowTopRightOnSquareIcon width={16} height={16} className='block @2xl:hidden' />
         <span className='hidden @2xl:block'>Open</span>
       </Link>
@@ -48,7 +48,7 @@ export default function DisplayOrder({ order, href }: { order: Order; href: stri
 
     // the margin ensures that the height of each order-element stays the same.
     return (
-      <button onClick={onClick} className='mx-1 my-1 rounded-md px-2 py-2 @2xl:m-0 @2xl:px-4 dark:bg-blue-600'>
+      <button onClick={onClick} className='mx-1 my-1 rounded-md bg-blue-400/40 px-2 py-2 @2xl:m-0 @2xl:px-4 dark:bg-blue-600'>
         <Cog6ToothIcon width={16} height={16} className='block @2xl:hidden' />
         <span className='hidden @2xl:block'>Edit</span>
       </button>
@@ -56,7 +56,7 @@ export default function DisplayOrder({ order, href }: { order: Order; href: stri
   }
 
   return (
-    <div className='group flex w-full items-center gap-4 rounded-md px-3 py-2 ring-1 transition-all duration-500 @lg:gap-8 dark:ring-gray-500 dark:hover:bg-neutral-700/80'>
+    <div className='group flex w-full items-center gap-4 rounded-md px-3 py-2 text-gray-700 ring-1 ring-gray-400 transition-all duration-500 hover:bg-neutral-300/60 @lg:gap-8 dark:text-gray-200 dark:ring-gray-500 dark:hover:bg-neutral-700/80'>
       <div className={twMerge('text-sm font-semibold', visibilities.id)}>#{order.id}</div>
       <div className={twMerge(visibilities.status)}>
         <StatusIcon status={order.status} />
@@ -94,7 +94,7 @@ export default function DisplayOrder({ order, href }: { order: Order; href: stri
 export function DisplayOrderHeaders({ className }: { className?: string }) {
   return (
     <div className='@container'>
-      <div className={twMerge('flex w-full gap-4 rounded-t-md px-3 py-2 font-semibold @lg:gap-8 dark:bg-neutral-900/80', className)}>
+      <div className={twMerge('flex w-full gap-4 rounded-t-md bg-neutral-500 px-3 py-2 font-semibold text-white @lg:gap-8 dark:bg-neutral-900/80 dark:text-gray-200', className)}>
         <span className={visibilities.id}>Nr.</span>
         {/*the margins classes are used to center the status-column-label when the indicator is shown, then to align it with status idicator and status-label*/}
         <span className={twMerge(visibilities.status, '-ml-6 -mr-4 @xl:-mr-0 @xl:ml-0')}>Status</span>
@@ -113,8 +113,8 @@ function StatusIcon({ status }: { status: Order['status'] }) {
   const isFailed = status === 'failed'
 
   const getStatusColor = () => {
-    if (isCompleted) return 'text-green-400 bg-green-400/10'
-    if (isFailed) return 'text-rose-400 bg-rose-400/10'
+    if (isCompleted) return 'text-green-600 dark:text-green-400 bg-green-400/30 dark:bg-green-400/10'
+    if (isFailed) return 'text-rose-600 dark:text-rose-400 bg-rose-400/40 dark:bg-rose-400/10'
     return 'text-orange-400 bg-orange-400/20'
   }
 
@@ -123,7 +123,7 @@ function StatusIcon({ status }: { status: Order['status'] }) {
       <div className={structureClasses(getStatusColor(), 'flex-none rounded-full p-1')}>
         <div className={twMerge('h-1.5 w-1.5 rounded-full bg-current', isPending && 'animate-pulse duration-75')} />
       </div>
-      <div className='hidden text-white @xl:block'>{status}</div>
+      <div className='hidden text-gray-700 @xl:block dark:text-gray-200'>{status}</div>
     </div>
   )
 }
