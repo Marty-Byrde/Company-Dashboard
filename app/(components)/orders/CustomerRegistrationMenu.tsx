@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import useManipulation from '../Shared/Manipulation/useManipulation'
 import { useSlideOver } from '../Shared/Slideover/SlideoverProvider'
 import { useCustomerSlideOverContext } from './RegistrationProvider'
-import convertContactInformations, { hasDifferentAddresses } from '@/lib/orders/ConvertContactInformations'
+import orderConversionUtils, { hasDifferentAddresses } from '@/lib/orders/OrderConversionUtils'
 import { twMerge } from 'tailwind-merge'
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
 
@@ -51,7 +51,7 @@ function WarningMenu({ shown }: { shown: boolean }) {
           className={twMerge('rounded-md px-4 py-2', baseInformation === 'billing' ? 'dark:bg-blue-500/60' : 'border dark:border-gray-500')}
           onClick={() => {
             setBaseInformation('billing')
-            setCustomer(convertContactInformations(order!.billing))
+            setCustomer(orderConversionUtils(order!.billing))
           }}>
           Rechnungsanschrift
         </button>
@@ -60,7 +60,7 @@ function WarningMenu({ shown }: { shown: boolean }) {
           className={twMerge('rounded-md px-4 py-2', baseInformation === 'shipping' ? 'dark:bg-blue-500/60' : 'border dark:border-gray-500')}
           onClick={() => {
             setBaseInformation('shipping')
-            setCustomer(convertContactInformations(order!.shipping))
+            setCustomer(orderConversionUtils(order!.shipping))
           }}>
           Liefersanschrift
         </button>

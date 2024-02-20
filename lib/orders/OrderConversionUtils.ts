@@ -1,7 +1,7 @@
 import { Customer } from 'hellocash-api/typings/Customer'
 import Order from 'woocommerce-utils/helper/typings/Order'
 
-export default function convertContactInformations({
+export default function orderConversionUtils({
   title_formatted: salutation,
   first_name: firstName,
   last_name: lastName,

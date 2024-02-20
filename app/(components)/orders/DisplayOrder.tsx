@@ -6,7 +6,7 @@ import { useSlideOver } from '@/components/Shared/Slideover/SlideoverProvider'
 import structureClasses from '@/lib/Shared/structureClasses'
 import { twMerge } from 'tailwind-merge'
 import Link from 'next/link'
-import convertContactInformations from '@/lib/orders/ConvertContactInformations'
+import orderConversionUtils from '@/lib/orders/OrderConversionUtils'
 
 /**
  * The visibilities of the order fields and headers.
@@ -42,7 +42,7 @@ export default function DisplayOrder({ order, href }: { order: Order; href: stri
   const EditButton = () => {
     const onClick = () => {
       setOrder(order)
-      setCustomer(convertContactInformations(order.billing))
+      setCustomer(orderConversionUtils(order.billing))
       setOpen(true)
     }
 
