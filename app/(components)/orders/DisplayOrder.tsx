@@ -32,7 +32,7 @@ export default function DisplayOrder({ order, href }: { order: Order; href: stri
 
   const OpenButton = () => {
     return (
-      <Link target='_blank' href={href} className='mx-1 my-1 rounded-md border border-gray-400 px-2 py-2 @2xl:m-0 @2xl:px-4 dark:border-gray-500'>
+      <Link target='_blank' href={href} className='mx-1 my-1 rounded-md border border-gray-400 px-2 py-2 active:bg-neutral-300 @2xl:m-0 @2xl:px-4 dark:border-gray-500'>
         <ArrowTopRightOnSquareIcon width={16} height={16} className='block @2xl:hidden' />
         <span className='hidden @2xl:block'>Open</span>
       </Link>
@@ -48,7 +48,9 @@ export default function DisplayOrder({ order, href }: { order: Order; href: stri
 
     // the margin ensures that the height of each order-element stays the same.
     return (
-      <button onClick={onClick} className='mx-1 my-1 rounded-md bg-blue-400/40 px-2 py-2 @2xl:m-0 @2xl:px-4 dark:bg-blue-600'>
+      <button
+        onClick={onClick}
+        className='mx-1 my-1 rounded-md bg-blue-400/40 px-2 py-2 hover:bg-blue-400/60 active:bg-blue-400/80 @2xl:m-0 @2xl:px-4 dark:bg-blue-600 dark:hover:ring-2 dark:hover:ring-inset dark:hover:ring-blue-500 dark:active:bg-blue-700/80'>
         <Cog6ToothIcon width={16} height={16} className='block @2xl:hidden' />
         <span className='hidden @2xl:block'>Edit</span>
       </button>
