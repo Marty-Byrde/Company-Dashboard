@@ -5,6 +5,8 @@ import SideBar from '@/app/(components)/root/NavigationBar/SideBar'
 import structureClasses from '@/lib/Shared/structureClasses'
 import { useColorModeValue } from '@/lib/Shared/ColorModeHandler'
 import AuthProvider from '@/app/(components)/root/AuthProvider'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,13 +26,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang='en' className={structureClasses(useColorModeValue(lightBackground, `dark ${raw_darkBackground}`), '')}>
-    <body className={inter.className}>
-    <AuthProvider>
-      <SideBar/>
-
-      <div className={structureClasses('px-4 py-4 text-gray-700 dark:text-gray-200 lg:ml-72', lightBackground, darkBackground)}>{children}</div>
-    </AuthProvider>
-    </body>
+      <body className={inter.className}>
+        <AuthProvider>
+          <SideBar />
+          <div className={structureClasses('px-4 py-4 text-gray-700 dark:text-gray-200 lg:ml-72', lightBackground, darkBackground)}>{children}</div>
+        </AuthProvider>
+        <ToastContainer position='top-right' autoClose={3000} stacked />
+      </body>
     </html>
   )
 }
