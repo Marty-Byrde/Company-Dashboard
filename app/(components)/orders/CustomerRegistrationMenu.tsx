@@ -1,18 +1,46 @@
 'use client'
-import { useEffect } from 'react'
+import { FormEvent, useEffect } from 'react'
 import useManipulation from '../Shared/Manipulation/useManipulation'
 import { useSlideOver } from '../Shared/Slideover/SlideoverProvider'
 import { useCustomerSlideOverContext } from './RegistrationProvider'
 import orderConversionUtils, { hasDifferentAddresses } from '@/lib/orders/OrderConversionUtils'
 import { twMerge } from 'tailwind-merge'
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
+import CreateCustomerAction from '@/actions/orders/CreateCustomerAction'
+import { toast } from 'react-toastify'
 
 export default function CustomerRegistrationMenu() {
   const { close } = useSlideOver()
-  const { order, baseInformation } = useCustomerSlideOverContext()
+  const { order, baseInformation, customer } = useCustomerSlideOverContext()
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const toastId = toast('Checking for Duplicates', { autoClose: false, isLoading: true })
+
+    CreateCustomerAction(customer!).then((response) => {
+      if (response.status === 'error') {
+        console.log(`Customer is already registered! Registration process aborted!`)
+        console.log(response.duplicates)
+
+        return toast.update(toastId, {
+          render: 'Customer is already registered! Abort!',
+          autoClose: 3000,
+          type: 'error',
+          isLoading: false,
+        })
+      }
+
+      toast.update(toastId, {
+        render: 'Sucessfully created new Customer',
+        autoClose: 3000,
+        type: 'success',
+        isLoading: false,
+      })
+    })
+  }
 
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <WarningMenu shown={hasDifferentAddresses({ order })} />
 
       <div className='flex flex-1 flex-col gap-4 overflow-y-auto px-4 pb-4'>
