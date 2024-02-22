@@ -47,6 +47,8 @@ export default function SearchDialog() {
     window.addEventListener('keydown', onKeyDown)
 
     return () => window.removeEventListener('keydown', onKeyDown)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, setOpen])
 
   return (
@@ -58,7 +60,7 @@ export default function SearchDialog() {
         <div className='fixed inset-0 bg-slate-900/50 backdrop-blur dark:bg-neutral-800/30' />
 
         <div className='fixed inset-0 overflow-y-auto px-4 py-4 sm:px-6 sm:py-20 md:py-32 lg:px-8 lg:py-[15vh]'>
-          <Dialog.Panel className='mx-auto transform-gpu overflow-hidden rounded-xl bg-neutral-200 shadow-xl sm:max-w-xl dark:bg-neutral-700/80 dark:ring-1 dark:ring-neutral-600'>
+          <Dialog.Panel className='mx-auto transform-gpu overflow-hidden rounded-xl bg-neutral-200 shadow-xl dark:bg-neutral-700/80 dark:ring-1 dark:ring-neutral-600 sm:max-w-xl'>
             <div {...autocomplete.getRootProps({})}>
               <form ref={formRef} {...compatibleProps} onSubmit={(e: any) => onSubmit(e)} onReset={(e: any) => onReset(e)}>
                 <SearchInput inputRef={inputRef} onClose={() => setOpen(false)} />
