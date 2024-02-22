@@ -1,14 +1,15 @@
 import Each from '@/lib/Shared/Each'
-import getWoocommerceApi from '@/lib/Shared/Woocommerce'
 import Slideover from '../(components)/Shared/Slideover/SlideOver'
 import SlideOverProvider from '../(components)/Shared/Slideover/SlideoverProvider'
 import CustomerRegistrationMenu from '../(components)/orders/CustomerRegistrationMenu'
 import RegistrationProvider from '../(components)/orders/RegistrationProvider'
 import DisplayOrder, { DisplayOrderHeaders } from '@/components/orders/DisplayOrder'
+import Order from 'woocommerce-utils/helper/typings/Order'
 
 export default async function OrdersPage() {
-  const { getOrders } = await getWoocommerceApi()
-  const orders = await getOrders(100)
+  const orders = await fetch(`${process.env.BACKEND}/orders?limit=25`, { next: { revalidate: 60 } })
+    .then((res) => res.json())
+    .then((orders) => orders as Order[])
 
   return (
     <SlideOverProvider>
