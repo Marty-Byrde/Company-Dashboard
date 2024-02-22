@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <AuthProvider>
           <SideBar />
-          <div className={structureClasses('px-4 py-4 text-gray-700 dark:text-gray-200 lg:ml-72', lightBackground, darkBackground)}>{children}</div>
+          <div className={structureClasses('relative px-4 py-4 text-gray-700 dark:text-gray-200 lg:ml-72', lightBackground, darkBackground)}>{children}</div>
         </AuthProvider>
         <ToastContainer position='top-right' autoClose={3000} stacked />
       </body>
