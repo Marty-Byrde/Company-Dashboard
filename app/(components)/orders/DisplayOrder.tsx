@@ -65,7 +65,7 @@ export default function DisplayOrder({ order, href }: { order: Order; href: stri
       </div>
       <div className={visibilities.date}>
         <span>
-          {order.date_created
+          {new Date(order.date_created)
             .toLocaleDateString('de')
             .split('.')
             .map((el) => (el.length === 1 ? '0' + el : el))
