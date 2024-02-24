@@ -22,9 +22,13 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      containers: {
+        '2xs': '16rem',
+        '3xs': '12rem',
+      },
     },
   },
-  plugins: [require('@tailwindcss/container-queries'),],
+  plugins: [require('@tailwindcss/container-queries'), require('@tailwindcss/forms')],
   darkMode: 'class',
 }
 export default config

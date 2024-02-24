@@ -6,7 +6,7 @@ import { SearchDialogContext } from '@/components/Shared/Search/SearchDialog'
 
 export default function SearchInput({ onClose, inputRef }: { onClose: () => void; inputRef: MutableRefObject<null> }) {
   const { autocompleteState, autocomplete } = useContext(SearchDialogContext)
-  let { onClick, onChange, onFocus, ...compatibleProps } = autocomplete.getInputProps({ inputElement: null })
+  let { onClick, onChange, onFocus, onKeyDown, onCompositionEnd, ...compatibleProps } = autocomplete.getInputProps({ inputElement: null })
 
   return (
     <div className='group relative flex h-12'>
@@ -19,7 +19,7 @@ export default function SearchInput({ onClose, inputRef }: { onClose: () => void
         onFocus={(e: any) => onFocus(e)}
         className={twMerge(
           'flex-auto appearance-none bg-transparent pl-12 text-slate-900 focus:flex-none ' +
-            'outline-none placeholder:text-slate-400 focus:w-full sm:text-sm dark:text-white [&::-webkit-search-cancel-button]:hidden ' +
+            'outline-none placeholder:text-slate-400 focus:w-full dark:text-white sm:text-sm [&::-webkit-search-cancel-button]:hidden ' +
             '[&::-webkit-search-decoration]:hidden [&::-webkit-search-results-button]:hidden [&::-webkit-search-results-decoration]:hidden',
           autocompleteState?.status === 'stalled' ? 'pr-11' : 'pr-4',
         )}
@@ -31,7 +31,7 @@ export default function SearchInput({ onClose, inputRef }: { onClose: () => void
 
             onClose()
           } else {
-            compatibleProps.onKeyDown(event)
+            onKeyDown(event)
           }
         }}
       />

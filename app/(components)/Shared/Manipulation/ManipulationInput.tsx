@@ -1,10 +1,16 @@
+import { NonNullable } from '@/typings/NonNullable'
 import ObjectPath from '@/typings/ObjectPath'
 import React, { InputHTMLAttributes, useEffect, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { useManipulationProvider } from './ManipulationContainer'
 
-interface ManipulationInputProps<MainObj> {
+interface ManipulationInputProps<T> extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onClick' | 'className' | 'onChange' | 'id'> {
   label?: string
-  path: ObjectPath<MainObj>
+  path: ObjectPath<NonNullable<T>>
+  hidden?: boolean
+  containerClassName?: string
+  inputClassName?: string
+  labelClassName?: string
 }
 
 /**
@@ -13,9 +19,9 @@ interface ManipulationInputProps<MainObj> {
  * @param path The path to the property that should be updated and displayed
  * @returns
  */
-export function ManipulationInput<MainObj>({ label, path }: ManipulationInputProps<MainObj>) {
-  const { object: main, setObject, debounce } = useManipulationProvider<MainObj>()
-  const [_internal, _setInteral] = useState<MainObj>(main)
+export function ManipulationInput<T>({ label, path, hidden, containerClassName, labelClassName, inputClassName, ...inputProps }: ManipulationInputProps<T>) {
+  const { object, setObject, debounce } = useManipulationProvider<T>()
+  const [_internal, _setInteral] = useState<T>(object)
 
   //* Debounce the object update
   useEffect(() => {
@@ -27,9 +33,12 @@ export function ManipulationInput<MainObj>({ label, path }: ManipulationInputPro
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_internal])
 
+  // In case the object is null or the input is hidden, then the input should not be rendered
+  if (object === null || hidden) return null
+
   //* Get the current value of the requested property
   //@ts-ignore
-  const defaultValue = path.split('.').reduce((acc, curr) => acc[curr], main)
+  const defaultValue = path.split('.').reduce((acc, curr) => acc[curr], object)
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     let value: string | number | boolean = defaultValue!.toString()
@@ -49,7 +58,7 @@ export function ManipulationInput<MainObj>({ label, path }: ManipulationInputPro
         return
     }
 
-    _setInteral(updateObjectByPath(main, path, value))
+    _setInteral(updateObjectByPath(object!, path, value))
   }
 
   const inputType = (): InputHTMLAttributes<HTMLInputElement>['type'] => {
@@ -64,12 +73,33 @@ export function ManipulationInput<MainObj>({ label, path }: ManipulationInputPro
   }
 
   return (
-    <div className='flex max-w-fit items-center gap-4 rounded-md bg-neutral-700 px-3 py-1.5'>
-      <label className='text-lg' htmlFor={path.toString()}>
-        {label ?? path?.split('.')?.at(-1)?.toString() ?? path}:
+    <div className={twMerge('flex items-center gap-6 rounded-md bg-neutral-200 px-3 py-1.5 dark:bg-neutral-700', containerClassName)}>
+      <label className={twMerge('relative text-lg text-gray-600 dark:text-gray-200', labelClassName)} htmlFor={path.toString()}>
+        {label ?? path?.split('.')?.at(-1)?.toString() ?? path}
+        {inputProps.required && (
+          <span className='absolute -right-2 -top-1 text-sm text-red-400 dark:text-red-300' title='required'>
+            *
+          </span>
+        )}
+        :
       </label>
 
-      <input type={inputType()} className='rounded-md dark:bg-neutral-700/40 ' id={path.toString()} onChange={onChange} defaultValue={String(defaultValue)} />
+      <input
+        placeholder={label}
+        type={inputType()}
+        {...inputProps}
+        className={twMerge(
+          'text-gray-500 dark:text-gray-300 ',
+          'border-gray-400 focus:border-blue-600 dark:border-gray-500 dark:focus:border-blue-600',
+          'min-w-4 flex-1 rounded-md bg-neutral-300/80 placeholder:text-white/70 dark:bg-neutral-700/40 dark:placeholder:text-gray-300/40',
+          'invalid:border-red-400 invalid:ring-1 invalid:ring-red-400 dark:invalid:border-red-400 dark:invalid:ring-red-400',
+          inputProps.type === 'radio' ? 'max-w-4 checked:border-gray-700 checked:bg-blue-600 dark:checked:border-gray-400 checked:dark:bg-blue-600 ' : null,
+          inputClassName,
+        )}
+        id={path.toString()}
+        onChange={onChange}
+        defaultValue={String(defaultValue)}
+      />
     </div>
   )
 }
