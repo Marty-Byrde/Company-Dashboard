@@ -44,7 +44,7 @@ export default async function CustomerBuyHistory({ customer }: { customer: Custo
                       title={`Quantity: ${item.quantity}x`}
                       single={invoice.items.filter((i) => !i.name.toLowerCase().includes('versand')).length === 1}
                       last={index === invoices.length - 1}
-                      date={formatDate(invoice.timestamp, 'dd.mm.yyyy')}
+                      date={formatDate(invoice.timestamp, 'dd. MMM yyyy')}
                     />
                   )}
                 />
