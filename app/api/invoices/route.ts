@@ -6,7 +6,7 @@ export async function GET(req: Request) {
   const limit = parseInt(params?.get('limit')?.toString() ?? '25')
 
   const { getInvoices } = getHellocashAPI()
-  const invoices = await getInvoices(parseInt(limit?.toString() ?? '25'))
+  const invoices = await getInvoices(limit)
 
   return NextResponse.json(invoices)
 }
