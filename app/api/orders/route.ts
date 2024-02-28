@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server'
 import getWoocommerceApi from '@/lib/Shared/Woocommerce'
 
-export async function GET(req: Request, context: { params: any }) {
-  const limit = context.params?.limit
+export const dynamic = 'force-dynamic'
+
+export async function GET(req: Request) {
+  const params = new URL(req.url).searchParams
+  const limit = parseInt(params?.get('limit')?.toString() ?? '25')
+
   const { getOrders } = await getWoocommerceApi()
-  const orders = await getOrders(parseInt(limit?.toString() ?? '25'))
+  const orders = await getOrders(limit)
 
   return NextResponse.json(orders)
 }
