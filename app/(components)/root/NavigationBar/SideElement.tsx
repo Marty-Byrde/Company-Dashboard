@@ -4,12 +4,12 @@ import { twMerge } from 'tailwind-merge'
 import { Disclosure, Transition } from '@headlessui/react'
 import structureClasses from '@/lib/Shared/structureClasses'
 import Link from 'next/link'
-import useIcon, { useIconProps } from '@/lib/Shared/useIcon'
+import useHeroIcon, { HeroIconName } from '@/lib/Shared/useIcon'
 
 export interface SideElementProps {
   name: string
   href?: string
-  icon?: useIconProps['iconName']
+  icon?: HeroIconName
   isOpen?: boolean
   subitems?: SideElementProps[] | any[]
   badge?: number
@@ -67,7 +67,7 @@ export default function SideElement(element: SideElementProps) {
  * @constructor
  */
 function BasicElement({ name, icon: iconName, subitems, isOpen, badge }: SideElementProps) {
-  const Icon = useIcon(iconName)
+  const Icon = useHeroIcon(iconName)
 
   const imgClasses = structureClasses(
     isOpen ? 'text-indigo-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-400 dark:group-hover:stroke-blue-400 group-hover:text-indigo-600',
@@ -76,8 +76,12 @@ function BasicElement({ name, icon: iconName, subitems, isOpen, badge }: SideEle
 
   return (
     <>
-      <Icon key={name + isOpen} className={imgClasses} />
-      <span className={twMerge('text-sm leading-6 text-gray-600 group-hover:text-indigo-600 dark:text-gray-300 dark:group-hover:text-blue-400', isOpen ? 'text-indigo-600 dark:text-blue-400' : '')}>
+      {Icon && <Icon key={name + isOpen} className={imgClasses} />}
+      <span
+        className={twMerge(
+          'text-sm leading-6 text-gray-600 group-hover:text-indigo-600 dark:text-gray-300 dark:group-hover:text-blue-400',
+          isOpen ? 'text-indigo-600 dark:text-blue-400' : '',
+        )}>
         {name}
       </span>
       <div className='flex flex-1 items-center justify-end gap-2'>
