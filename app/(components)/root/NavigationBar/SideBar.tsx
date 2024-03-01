@@ -16,12 +16,12 @@ export default async function SideBar() {
       { name: 'Home', icon: 'HomeIcon', href: '/' },
       {
         name: 'Orders',
-        icon: 'FolderIcon',
+        icon: 'ShoppingBagIcon',
         href: '/orders',
       },
       {
         name: 'Articles',
-        icon: 'FolderIcon',
+        icon: 'TableCellsIcon',
         href: '/articles',
       },
     ],

@@ -1,46 +1,15 @@
-import { ComponentType } from 'react'
-import IconProps from '@/typings/Icon'
-import { AdjustmentsVerticalIcon, BuildingStorefrontIcon, CursorArrowRaysIcon, FolderIcon, HomeIcon, LockOpenIcon, ShoppingBagIcon } from "@heroicons/react/24/outline"
-// import FolderIcon from '@/public/next.svg'
-// import BuildingStoreFrontIcon from '@/public/next.svg'
-// import CursorArrowRaysIcon from '@/public/next.svg'
-// import ShoppingBagIcon from '@/public/next.svg'
-// import HomeIcon from '@/public/next.svg'
-// import AdjustmentsVerticalIcon from '@/public/next.svg'
-// import LockOpenIcon from '@/public/next.svg'
+import * as icons from '@heroicons/react/24/outline'
 
-export interface useIconProps {
-  iconName: 'FolderIcon' | 'AdjustmentsVerticalIcon' | 'BuildingStoreFrontIcon' | 'CursorArrowRaysIcon' | 'HomeIcon' | 'ShoppingBagIcon' | 'LockOpenIcon' | undefined
-}
+export type HeroIconName = keyof typeof icons & {}
 
-export default function useIcon(iconName: useIconProps['iconName']) {
-  let Icon = (): ComponentType<IconProps> => {
-    switch (iconName) {
-      case 'FolderIcon':
-        return FolderIcon
+/**
+ * This hook returns the requested icon from the heroicons package based on its name (key)
+ * @param name - The name of the icon
+ * @returns The requested icon or null in case the name is used optionally
+ */
+export default function useHeroIcon(name?: HeroIconName) {
+  if (!name) return null
 
-      case 'AdjustmentsVerticalIcon':
-        return AdjustmentsVerticalIcon
-
-      case 'HomeIcon':
-        return HomeIcon
-
-      case 'BuildingStoreFrontIcon':
-        return BuildingStorefrontIcon
-
-      case 'CursorArrowRaysIcon':
-        return CursorArrowRaysIcon
-
-      case 'ShoppingBagIcon':
-        return ShoppingBagIcon
-
-      case 'LockOpenIcon':
-        return LockOpenIcon
-
-      default:
-        return () => null
-    }
-  }
-
-  return Icon()
+  //? Returns the requested icon based on the name (key)
+  return Object.values(icons).at(Object.keys(icons).indexOf(name)) as typeof icons.FireIcon
 }
