@@ -19,6 +19,11 @@ export default async function SideBar() {
         icon: 'FolderIcon',
         href: '/orders',
       },
+      {
+        name: 'Articles',
+        icon: 'FolderIcon',
+        href: '/articles',
+      },
     ],
   }
   const managementElements: SideElementProps[] = [
