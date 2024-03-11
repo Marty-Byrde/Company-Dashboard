@@ -1,3 +1,5 @@
+import ReactState from '@/typings/ReactState'
+
 /**
  * This interface represents the visibility-classes type that takes in each partial keys of a
  * generic type were a classes can be assigned for that key / property.
@@ -33,12 +35,10 @@ export default interface TableProps<T> {
   searchFilter: SearchFilter<T>
 }
 
-export interface TableContext<T> {
-  items: TableProps<T>['items']
-  labels: TableProps<T>['labels']
-  visibilities: TableProps<T>['visibilities']
-  searchFilter: TableProps<T>['searchFilter']
+export interface TableContext<T> extends TableProps<T> {
+  initialItems: TableProps<T>['items']
 
   selection: TableElement<T>[]
+  setSelection: ReactState<TableProps<T>['items']>['setState']
   isSelected: (item: TableElement<T>) => boolean
 }
