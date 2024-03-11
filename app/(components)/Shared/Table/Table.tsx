@@ -1,10 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import { twMerge } from 'tailwind-merge'
 import Each from '@/lib/Shared/Each'
-import TableProps, { TableElement } from '@/typings/Shared/Table/Types'
+import TableProps, { TableContext, TableElement } from '@/typings/Shared/Table/Types'
+import { once } from 'lodash'
+
+const createGenericTableContext = once(<T,>() => createContext<T>({} as T))
 
 /**
  * This component renders a table with the given items and their properties.
@@ -16,12 +19,13 @@ import TableProps, { TableElement } from '@/typings/Shared/Table/Types'
  * @returns
  */
 export default function Table<T>({ items: initialItems, visibilities, searchFilter, labels }: TableProps<T>) {
+  const Context = createGenericTableContext<TableContext<T>>()
   type Item = TableElement<T>
 
   const [items, setItems] = useState(initialItems)
   const [selected, setSelected] = useState<Item[]>([])
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined)
-  const isSelected = (item: Item) => selected.find((i) => i.id === item.id)
+  const isSelected = (item: Item) => !!selected.find((i) => i.id === item.id)
   const toggleSelection = (item: Item) => () => setSelected((prev) => (isSelected(item) ? prev.filter((a) => a.id !== item.id) : [...prev, item]))
   const [debouncedValue] = useDebounce(searchValue, 500)
 
@@ -33,7 +37,7 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
   }, [debouncedValue])
 
   return (
-    <>
+    <Context.Provider value={{ labels, visibilities, items: initialItems, selection: selected, searchFilter, isSelected }}>
       <div className='wrapper relative mt-12 @container 2xs:mt-0'>
         {/*<TableSelectionButtons selection={selected} />*/}
         <div className={twMerge('mb-1 hidden flex-1 items-center justify-end gap-4 @2xs:flex')}>
@@ -119,7 +123,7 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
                       type='checkbox'
                       className='absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded-md border-gray-300 text-indigo-600 hover:cursor-pointer focus:ring-indigo-600 dark:bg-neutral-600 dark:text-fuchsia-700 dark:checked:bg-fuchsia-700 dark:focus:ring-fuchsia-700'
                       value={item.id}
-                      checked={!!isSelected(item)}
+                      checked={isSelected(item)}
                       onChange={toggleSelection(item)}
                     />
                   </td>
@@ -157,7 +161,7 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
           </tbody>
         </table>
       </div>
-    </>
+    </Context.Provider>
   )
 }
 
