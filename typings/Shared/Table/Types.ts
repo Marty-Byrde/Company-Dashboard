@@ -32,3 +32,13 @@ export default interface TableProps<T> {
   visibilities?: TableVisibilities<T>
   searchFilter: SearchFilter<T>
 }
+
+export interface TableContext<T> {
+  items: TableProps<T>['items']
+  labels: TableProps<T>['labels']
+  visibilities: TableProps<T>['visibilities']
+  searchFilter: TableProps<T>['searchFilter']
+
+  selection: TableElement<T>[]
+  isSelected: (item: TableElement<T>) => boolean
+}
