@@ -30,7 +30,7 @@ export interface SearchFilter<T> extends Array<keyof T> {}
  */
 export default interface TableProps<T> {
   items: TableElement<T>[]
-  labels?: Partial<{ [key in keyof TableElement<T>]: string }>
+  labels?: { [key in keyof TableElement<T>]?: string }
   visibilities?: TableVisibilities<T>
   searchFilter: SearchFilter<T>
 }
@@ -38,6 +38,7 @@ export default interface TableProps<T> {
 export interface TableContext<T> extends TableProps<T> {
   initialItems: TableProps<T>['items']
 
+  labels: { [key in keyof TableElement<T>]?: string }
   selection: TableElement<T>[]
   setSelection: ReactState<TableProps<T>['items']>['setState']
   isSelected: (item: TableElement<T>) => boolean
