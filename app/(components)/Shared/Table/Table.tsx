@@ -19,6 +19,7 @@ export const useTableContext = <T,>() => useContext<TableContext<T>>(createGener
  * @param visibilities Visibility classes for each property of an item, using container-queries.
  * @param searchFilter Takes in the properties of an item as an array, that are then used by the search-input to filter the displayed items.
  * @param labels The labels for each (or partial) item-property of an item, that are displayed as the table headers.
+ * @param noDefaultLabels Whether the Table component should provide default labels, based on the property-keys of the items, for the labels that were not provided.
  * @returns
  */
 export default function Table<T>({ items: initialItems, visibilities, searchFilter, labels, noDefaultLabels }: TableProps<T>) {
@@ -42,7 +43,6 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
         searchFilter,
       }}>
       <div className='wrapper relative mt-12 @container 2xs:mt-0'>
-        {/*<TableSelectionButtons selection={selected} />*/}
         <TableSearchBar />
         <table className='w-full rounded-md'>
           <thead className='bg-gray-700 py-2 text-left dark:bg-neutral-900'>
