@@ -3,10 +3,10 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import { twMerge } from 'tailwind-merge'
-import Each from '@/lib/Shared/Each'
 import TableProps, { TableContext, TableElement } from '@/typings/Shared/Table/Types'
 import { once } from 'lodash'
 import TableColumnLabels from '@/components/Shared/Table/TableColumnLabels'
+import TableItems from '@/components/Shared/Table/TableItems'
 
 const createGenericTableContext = once(<T,>() => createContext<T>({} as T))
 
@@ -30,7 +30,6 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
   const [selected, setSelected] = useState<Item[]>([])
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined)
   const isSelected = (item: Item) => !!selected.find((i) => i.id === item.id)
-  const toggleSelection = (item: Item) => () => setSelected((prev) => (isSelected(item) ? prev.filter((a) => a.id !== item.id) : [...prev, item]))
   const [debouncedValue] = useDebounce(searchValue, 500)
 
   useEffect(() => {
@@ -75,55 +74,7 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
             </tr>
           </thead>
           <tbody className='space-y-24 divide-y divide-gray-400 px-2 dark:divide-neutral-500'>
-            <Each
-              items={items}
-              render={(item, index) => (
-                <tr
-                  key={item.id.toString() + index.toString()}
-                  className={twMerge('h-12 px-4 transition-colors duration-200 dark:hover:bg-neutral-700', isSelected(item) && 'dark:bg-neutral-700/60 dark:hover:bg-neutral-700')}
-                  onClick={toggleSelection(item)}>
-                  <td className='relative min-w-12'>
-                    {isSelected(item) && <div className='absolute inset-y-0 left-0 w-0.5 bg-indigo-600 dark:bg-fuchsia-700' />}
-
-                    <input
-                      type='checkbox'
-                      className='absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded-md border-gray-300 text-indigo-600 hover:cursor-pointer focus:ring-indigo-600 dark:bg-neutral-600 dark:text-fuchsia-700 dark:checked:bg-fuchsia-700 dark:focus:ring-fuchsia-700'
-                      value={item.id}
-                      checked={isSelected(item)}
-                      onChange={toggleSelection(item)}
-                    />
-                  </td>
-
-                  {!labels &&
-                    Object.keys(item).map((k, property_index) => {
-                      const key = k as keyof Item
-                      if (typeof item[key] === 'object' || item[key] === null) return null
-
-                      const value = item[key] as string | number
-
-                      //? Renders the value of each item's property as a table element and sets the visibility classes for that property key.
-                      return (
-                        <td key={item.id.toString() + key.toString() + property_index} className={twMerge(visibilities ? visibilities[key] : '')}>
-                          {value}
-                        </td>
-                      )
-                    })}
-
-                  {labels &&
-                    Object.keys(labels).map((k, property_index) => {
-                      const key = k as keyof Item
-                      const value = item[key] as string | number
-                      if (!value) return null
-
-                      return (
-                        <td key={item.id.toString() + key.toString() + property_index} className={twMerge(visibilities ? visibilities[key] : '')}>
-                          {value}
-                        </td>
-                      )
-                    })}
-                </tr>
-              )}
-            />
+            <TableItems />
           </tbody>
         </table>
       </div>
