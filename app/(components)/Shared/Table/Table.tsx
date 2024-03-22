@@ -1,12 +1,12 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
-import { useDebounce } from 'use-debounce'
+import { createContext, useContext, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import TableProps, { TableContext, TableElement } from '@/typings/Shared/Table/Types'
 import { once } from 'lodash'
 import TableColumnLabels from '@/components/Shared/Table/TableColumnLabels'
 import TableItems from '@/components/Shared/Table/TableItems'
+import TableSearchBar from '@/components/Shared/Table/TableSearchBar'
 
 const createGenericTableContext = once(<T,>() => createContext<T>({} as T))
 
@@ -28,16 +28,7 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
 
   const [items, setItems] = useState(initialItems)
   const [selected, setSelected] = useState<Item[]>([])
-  const [searchValue, setSearchValue] = useState<string | undefined>(undefined)
   const isSelected = (item: Item) => !!selected.find((i) => i.id === item.id)
-  const [debouncedValue] = useDebounce(searchValue, 500)
-
-  useEffect(() => {
-    if (debouncedValue === undefined) return
-    if (debouncedValue.trim().length === 0) return setItems(initialItems)
-
-    setItems(initialItems.filter((i) => applyFilters(i, debouncedValue, searchFilter)))
-  }, [debouncedValue])
 
   return (
     <Context.Provider
@@ -45,6 +36,7 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
         labels: Object.assign(noDefaultLabels ? {} : defaultLabels, labels),
         visibilities,
         items,
+        setItems,
         initialItems,
         selection: selected,
         setSelection: setSelected,
@@ -53,16 +45,7 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
       }}>
       <div className='wrapper relative mt-12 @container 2xs:mt-0'>
         {/*<TableSelectionButtons selection={selected} />*/}
-        <div className={twMerge('mb-1 hidden flex-1 items-center justify-end gap-4 @2xs:flex')}>
-          <label htmlFor='table-search text-sm' className='min-w-0'>
-            Suche:
-          </label>
-          <input
-            id='table-search'
-            onChange={({ target: { value } }) => setSearchValue(value)}
-            className='max-w-24 flex-1 rounded-md px-3 py-1.5 text-sm shadow-sm @sm:max-w-32 @md:max-w-48 @2xl:max-w-sm dark:bg-neutral-700 dark:shadow-neutral-600'
-          />
-        </div>
+        <TableSearchBar />
         <table className='w-full rounded-md'>
           <thead className='bg-gray-700 py-2 text-left dark:bg-neutral-900'>
             <tr className='space-x-24 text-gray-100 dark:text-gray-200'>
@@ -80,21 +63,6 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
       </div>
     </Context.Provider>
   )
-}
-
-/**
- * Checks whether an item's property, that is included in the searchFilter, includes the search value
- * @param item One of the initial items that is checked whether the given filter applies.
- * @param searchValue The value that is used to filter the items and that has been entered into the search-input
- * @param filters The properties of an item that are used to filter the items based on that properties.
- * @returns Whether the filter applies to the given item or not.
- */
-function applyFilters<T>(item: TableElement<T>, searchValue: string, filters: TableProps<T>['searchFilter']) {
-  const filteredProperties = Object.keys(item).filter((k) => filters.includes(k as keyof T))
-  return filteredProperties.some((k) => {
-    const key = k as keyof TableElement<T>
-    return item[key].toString().toLowerCase().includes(searchValue.toLowerCase())
-  })
 }
 
 /**
