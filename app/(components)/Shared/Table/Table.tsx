@@ -6,6 +6,7 @@ import { twMerge } from 'tailwind-merge'
 import Each from '@/lib/Shared/Each'
 import TableProps, { TableContext, TableElement } from '@/typings/Shared/Table/Types'
 import { once } from 'lodash'
+import TableColumnLabels from '@/components/Shared/Table/TableColumnLabels'
 
 const createGenericTableContext = once(<T,>() => createContext<T>({} as T))
 
@@ -61,34 +62,7 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
                 <SelectAllCheckbox />
               </th>
 
-              {!labels &&
-                Object.keys(items.at(0)!)?.map((k) => {
-                  const item = items.at(0)
-                  if (!item) return null
-
-                  const key = k as keyof Item
-                  if (typeof item[key] === 'object' || item[key] === null) return null
-
-                  //? Renders the value of each item's property as a table element and sets the visibility classes for that property key.
-                  return (
-                    <th key={item.id.toString() + key.toString() + 'headers'} className={twMerge(visibilities ? visibilities[key] : '')}>
-                      {key.toString()}
-                    </th>
-                  )
-                })}
-
-              {labels &&
-                Object.keys(labels).map((k) => {
-                  const key = k as keyof Item
-                  const label = labels[key]
-                  if (!label) return null
-
-                  return (
-                    <th key={key.toString() + label.toString() + 'headers'} className={twMerge(visibilities ? visibilities[label] : '')}>
-                      {label.toString()}
-                    </th>
-                  )
-                })}
+              <TableColumnLabels />
             </tr>
           </thead>
           <tbody className='space-y-24 divide-y divide-gray-400 px-2 dark:divide-neutral-500'>
