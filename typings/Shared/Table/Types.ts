@@ -33,6 +33,7 @@ export default interface TableProps<T> {
   labels?: { [key in keyof TableElement<T>]?: string }
   visibilities?: TableVisibilities<T>
   searchFilter: SearchFilter<T>
+  noDefaultLabels?: boolean
 }
 
 export interface TableContext<T> extends TableProps<T> {
