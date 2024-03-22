@@ -4,10 +4,11 @@ import { twMerge } from 'tailwind-merge'
 import Each from '@/lib/Shared/Each'
 import getKeys from '@/lib/Shared/Keys'
 import React from 'react'
+import useTableSelection from '@/hooks/Table/useTableSelection'
 
 export default function TableItems<T>() {
-  const { items, isSelected, setSelection } = useTableContext<T>()
-  const toggleSelection = (item: TableElement<T>) => () => setSelection((prev) => (isSelected(item) ? prev.filter((a) => a.id !== item.id) : [...prev, item]))
+  const { items } = useTableContext<T>()
+  const { isSelected, toggleSelection } = useTableSelection<T>()
 
   return Each({
     items,
@@ -24,8 +25,7 @@ export default function TableItems<T>() {
 }
 
 function SelectCheckBox<T>({ item }: { item: TableElement<T> }) {
-  const { isSelected, setSelection } = useTableContext<T>()
-  const toggleSelection = (item: TableElement<T>) => () => setSelection((prev) => (isSelected(item) ? prev.filter((a) => a.id !== item.id) : [...prev, item]))
+  const { isSelected, toggleSelection } = useTableSelection<T>()
 
   return (
     <td className='relative min-w-12'>

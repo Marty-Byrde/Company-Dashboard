@@ -28,20 +28,18 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
 
   const [items, setItems] = useState(initialItems)
   const [selected, setSelected] = useState<Item[]>([])
-  const isSelected = (item: Item) => !!selected.find((i) => i.id === item.id)
 
   return (
     <Context.Provider
       value={{
         labels: Object.assign(noDefaultLabels ? {} : defaultLabels, labels),
-        visibilities,
+        initialItems,
         items,
         setItems,
-        initialItems,
+        visibilities,
         selection: selected,
         setSelection: setSelected,
         searchFilter,
-        isSelected,
       }}>
       <div className='wrapper relative mt-12 @container 2xs:mt-0'>
         {/*<TableSelectionButtons selection={selected} />*/}
