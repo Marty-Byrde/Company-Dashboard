@@ -5,6 +5,19 @@ import Each from '@/lib/Shared/Each'
 import getKeys from '@/lib/Shared/Keys'
 import React from 'react'
 import useTableSelection from '@/hooks/Table/useTableSelection'
+import { motion } from 'framer-motion'
+
+const animationVariants = {
+  hidden: { opacity: 0, y: -24, borderStyle: 'dotted' },
+  visible: (i: number) => ({
+    y: 0,
+    opacity: 1,
+    borderStyle: 'solid',
+    transition: {
+      delay: i * 0.02, // staggered effect with an incremental delay
+    },
+  }),
+}
 
 export default function TableItems<T>() {
   const { items } = useTableContext<T>()
@@ -13,13 +26,15 @@ export default function TableItems<T>() {
   return Each({
     items,
     render: (item, index: number) => (
-      <tr
+      <motion.tr
+        custom={index}
+        variants={animationVariants}
         key={item.id.toString() + index.toString()}
         onClick={toggleSelection(item)}
         className={twMerge('h-12 px-4 transition-colors duration-200 dark:hover:bg-neutral-700', isSelected(item) && 'dark:bg-neutral-700/60 dark:hover:bg-neutral-700')}>
         <SelectCheckBox item={item} />
         <TableItem item={item} />
-      </tr>
+      </motion.tr>
     ),
   })
 }

@@ -7,6 +7,7 @@ import { once } from 'lodash'
 import TableColumnLabels from '@/components/Shared/Table/TableColumnLabels'
 import TableItems from '@/components/Shared/Table/TableItems'
 import TableSearchBar from '@/components/Shared/Table/TableSearchBar'
+import { motion } from 'framer-motion'
 
 const createGenericTableContext = once(<T,>() => createContext<T>({} as T))
 
@@ -54,9 +55,9 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
               <TableColumnLabels />
             </tr>
           </thead>
-          <tbody className='space-y-24 divide-y divide-gray-400 px-2 dark:divide-neutral-500'>
+          <motion.tbody initial='hidden' animate='visible' className='space-y-24 divide-y divide-gray-400 px-2 dark:divide-neutral-500'>
             <TableItems />
-          </tbody>
+          </motion.tbody>
         </table>
       </div>
     </Context.Provider>

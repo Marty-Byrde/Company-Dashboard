@@ -17,6 +17,7 @@
     "@tailwindcss/forms": "^0.5.7",
     "@types/lodash": "^4.14.202",
     "date-fns": "^3.3.1",
+    "framer-motion": "^11.0.20",
     "hellocash-api": "1.0.4",
     "lodash": "^4.17.21",
     "mongodb": "^6.3.0",
