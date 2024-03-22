@@ -9,6 +9,8 @@ import { once } from 'lodash'
 
 const createGenericTableContext = once(<T,>() => createContext<T>({} as T))
 
+export const useTableContext = <T,>() => useContext<TableContext<T>>(createGenericTableContext())
+
 /**
  * This component renders a table with the given items and their properties.
  * It also provides a search input to filter the items based on their properties.
