@@ -21,7 +21,7 @@ export const useTableContext = <T,>() => useContext<TableContext<T>>(createGener
  * @param labels The labels for each (or partial) item-property of an item, that are displayed as the table headers.
  * @returns
  */
-export default function Table<T>({ items: initialItems, visibilities, searchFilter, labels }: TableProps<T>) {
+export default function Table<T>({ items: initialItems, visibilities, searchFilter, labels, noDefaultLabels }: TableProps<T>) {
   const Context = createGenericTableContext<TableContext<T>>()
   type Item = TableElement<T>
   const defaultLabels = Object.keys(initialItems[0]).reduce((acc, key) => ({ ...acc, [key]: key }), {} as { [key in keyof Item]: string })
@@ -42,7 +42,16 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
 
   return (
     <Context.Provider
-      value={{ labels: Object.assign(defaultLabels, labels), visibilities, items, initialItems, selection: selected, setSelection: setSelected, searchFilter, isSelected }}>
+      value={{
+        labels: Object.assign(noDefaultLabels ? {} : defaultLabels, labels),
+        visibilities,
+        items,
+        initialItems,
+        selection: selected,
+        setSelection: setSelected,
+        searchFilter,
+        isSelected,
+      }}>
       <div className='wrapper relative mt-12 @container 2xs:mt-0'>
         {/*<TableSelectionButtons selection={selected} />*/}
         <div className={twMerge('mb-1 hidden flex-1 items-center justify-end gap-4 @2xs:flex')}>
