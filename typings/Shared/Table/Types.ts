@@ -43,5 +43,4 @@ export interface TableContext<T> extends TableProps<T> {
   labels: { [key in keyof TableElement<T>]?: string }
   selection: TableElement<T>[]
   setSelection: ReactState<TableProps<T>['items']>['setState']
-  isSelected: (item: TableElement<T>) => boolean
 }
