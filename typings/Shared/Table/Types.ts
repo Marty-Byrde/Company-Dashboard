@@ -37,6 +37,7 @@ export default interface TableProps<T> {
 }
 
 export interface TableContext<T> extends TableProps<T> {
+  setItems: ReactState<TableProps<T>['items']>['setState']
   initialItems: TableProps<T>['items']
 
   labels: { [key in keyof TableElement<T>]?: string }
