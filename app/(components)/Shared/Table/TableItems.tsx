@@ -31,7 +31,10 @@ export default function TableItems<T>() {
         variants={animationVariants}
         key={item.id.toString() + index.toString()}
         onClick={toggleSelection(item)}
-        className={twMerge('h-12 px-4 transition-colors duration-200 dark:hover:bg-neutral-700', isSelected(item) && 'dark:bg-neutral-700/60 dark:hover:bg-neutral-700')}>
+        className={twMerge(
+          'h-12 px-4 transition-colors duration-200 dark:text-gray-300 dark:hover:bg-neutral-700',
+          isSelected(item) && 'dark:bg-neutral-700/60 dark:text-gray-100 dark:hover:bg-neutral-700',
+        )}>
         <SelectCheckBox item={item} />
         <TableItem item={item} />
       </motion.tr>

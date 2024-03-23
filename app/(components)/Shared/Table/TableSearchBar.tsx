@@ -5,7 +5,7 @@ import { useTableContext } from '@/components/Shared/Table/Table'
 import TableProps, { TableElement } from '@/typings/Shared/Table/Types'
 
 export default function TableSearchBar<T>() {
-  const { items: initialItems, searchFilter, setItems } = useTableContext<T>()
+  const { initialItems, searchFilter, setItems } = useTableContext<T>()
 
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined)
   const [debouncedValue] = useDebounce(searchValue, 500)
@@ -41,6 +41,8 @@ function applySearchFilters<T>(item: TableElement<T>, searchValue: string, filte
   const filteredProperties = Object.keys(item).filter((k) => filters.includes(k as keyof T))
   return filteredProperties.some((k) => {
     const key = k as keyof TableElement<T>
+    if (!item[key]) return false
+
     return item[key].toString().toLowerCase().includes(searchValue.toLowerCase())
   })
 }
