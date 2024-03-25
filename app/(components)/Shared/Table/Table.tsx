@@ -21,9 +21,10 @@ export const useTableContext = <T,>() => useContext<TableContext<T>>(createGener
  * @param searchFilter Takes in the properties of an item as an array, that are then used by the search-input to filter the displayed items.
  * @param labels The labels for each (or partial) item-property of an item, that are displayed as the table headers.
  * @param noDefaultLabels Whether the Table component should provide default labels, based on the property-keys of the items, for the labels that were not provided.
+ * @param itemButtons Takes in a functional component that receives the current row's item and returns buttons that are displayed in the last column.
  * @returns
  */
-export default function Table<T>({ items: initialItems, visibilities, searchFilter, labels, noDefaultLabels }: TableProps<T>) {
+export default function Table<T>({ items: initialItems, labels, noDefaultLabels, ...props }: TableProps<T>) {
   const Context = createGenericTableContext<TableContext<T>>()
   type Item = TableElement<T>
   const defaultLabels = Object.keys(initialItems[0]).reduce((acc, key) => ({ ...acc, [key]: key }), {} as { [key in keyof Item]: string })
@@ -38,10 +39,9 @@ export default function Table<T>({ items: initialItems, visibilities, searchFilt
         initialItems,
         items,
         setItems,
-        visibilities,
         selection: selected,
         setSelection: setSelected,
-        searchFilter,
+        ...props,
       }}>
       <div className='wrapper relative mt-12 @container 2xs:mt-0'>
         <TableSearchBar />
