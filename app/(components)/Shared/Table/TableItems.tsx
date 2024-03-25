@@ -37,6 +37,7 @@ export default function TableItems<T>() {
         )}>
         <SelectCheckBox item={item} />
         <TableItem item={item} />
+        <ItemButtons item={item} />
       </motion.tr>
     ),
   })
@@ -71,4 +72,12 @@ function TableItem<T>({ item }: { item: TableElement<T> }) {
       </td>
     ),
   })
+}
+
+function ItemButtons<T>({ item }: { item: TableElement<T> }) {
+  const { itemButtons: buttons, visibilities } = useTableContext<T>()
+
+  if (!buttons) return null
+
+  return <td className={twMerge(visibilities?.itemButtons)}>{buttons(item)}</td>
 }
