@@ -4,7 +4,7 @@ import { useDebounce } from 'use-debounce'
 import { useTableContext } from '@/components/Shared/Table/Table'
 import TableProps, { TableElement } from '@/typings/Shared/Table/Types'
 
-export default function TableSearchBar<T>() {
+export default function TableSearchBar<T>({ className }: { className?: string }) {
   const { initialItems, searchFilter, setItems } = useTableContext<T>()
 
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined)
@@ -17,7 +17,7 @@ export default function TableSearchBar<T>() {
   }, [debouncedValue])
 
   return (
-    <div className={twMerge('mb-1 hidden flex-1 items-center justify-end gap-4 @2xs:flex')}>
+    <div className={twMerge('hidden   items-center justify-end gap-4 @2xs:flex', className)}>
       <label htmlFor='table-search text-sm' className='min-w-0'>
         Suche:
       </label>
