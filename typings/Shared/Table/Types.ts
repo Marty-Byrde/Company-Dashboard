@@ -1,10 +1,11 @@
 import ReactState from '@/typings/ReactState'
+import { ReactNode } from 'react'
 
 /**
  * This interface represents the visibility-classes type that takes in each partial keys of a
  * generic type were a classes can be assigned for that key / property.
  */
-export type TableVisibilities<T> = {
+export type TableVisibilities<T> = { itemButtons?: string } & {
   [key in keyof T]?: string
 }
 
@@ -34,6 +35,8 @@ export default interface TableProps<T> {
   visibilities?: TableVisibilities<T>
   searchFilter: SearchFilter<T>
   noDefaultLabels?: boolean
+
+  itemButtons?: (item: TableElement<T>) => ReactNode
 }
 
 export interface TableContext<T> extends TableProps<T> {
