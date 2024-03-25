@@ -36,6 +36,7 @@ export default interface TableProps<T> {
   searchFilter: SearchFilter<T>
   noDefaultLabels?: boolean
 
+  selectionButtons?: ReactNode | ReactNode[]
   itemButtons?: (item: TableElement<T>) => ReactNode
 }
 
