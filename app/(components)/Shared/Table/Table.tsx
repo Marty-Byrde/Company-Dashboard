@@ -6,8 +6,8 @@ import TableProps, { TableContext, TableElement } from '@/typings/Shared/Table/T
 import { once } from 'lodash'
 import TableColumnLabels from '@/components/Shared/Table/TableColumnLabels'
 import TableItems from '@/components/Shared/Table/TableItems'
-import TableSearchBar from '@/components/Shared/Table/TableSearchBar'
 import { motion } from 'framer-motion'
+import TableSearchBar from '@/components/Shared/Table/TableSearchBar'
 
 const createGenericTableContext = once(<T,>() => createContext<T>({} as T))
 
@@ -22,9 +22,10 @@ export const useTableContext = <T,>() => useContext<TableContext<T>>(createGener
  * @param labels The labels for each (or partial) item-property of an item, that are displayed as the table headers.
  * @param noDefaultLabels Whether the Table component should provide default labels, based on the property-keys of the items, for the labels that were not provided.
  * @param itemButtons Takes in a functional component that receives the current row's item and returns buttons that are displayed in the last column.
+ * @param selectionButtons Buttons that are displayed above the table, that can be used to perform actions on the selected items.
  * @returns
  */
-export default function Table<T>({ items: initialItems, labels, noDefaultLabels, ...props }: TableProps<T>) {
+export default function Table<T>({ items: initialItems, labels, noDefaultLabels, selectionButtons, ...props }: TableProps<T>) {
   const Context = createGenericTableContext<TableContext<T>>()
   type Item = TableElement<T>
   const defaultLabels = Object.keys(initialItems[0]).reduce((acc, key) => ({ ...acc, [key]: key }), {} as { [key in keyof Item]: string })
@@ -43,8 +44,11 @@ export default function Table<T>({ items: initialItems, labels, noDefaultLabels,
         setSelection: setSelected,
         ...props,
       }}>
-      <div className='wrapper relative mt-12 @container 2xs:mt-0'>
-        <TableSearchBar />
+      <div className='wrapper relative @container 2xs:mt-0'>
+        <div className='flex items-end justify-end px-1 py-2'>
+          <div className={twMerge('flex flex-1 flex-wrap gap-2', selected.length === 0 && 'opacity-25')}>{selectionButtons}</div>
+          <TableSearchBar className='flex-1' />
+        </div>
         <table className='w-full rounded-md'>
           <thead className='bg-gray-700 py-2 text-left dark:bg-neutral-900'>
             <tr className='space-x-24 text-gray-100 dark:text-gray-200'>
