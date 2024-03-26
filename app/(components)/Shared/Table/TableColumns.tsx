@@ -22,7 +22,11 @@ export default function TableColumns<T>() {
       <Each
         items={getKeys(labels)}
         render={(value, index) => (
-          <Label key={value.toString() + index} label={labels[value]!} classes={`${visiblilty(value as keyof TableVisibilities<T>)} ${index === 0 && !allowSelection && 'pl-4'}`} />
+          <Label
+            key={value.toString() + index}
+            label={labels[value]!}
+            classes={twMerge('pr-2', visiblilty(value as keyof TableVisibilities<T>), index === 0 && !allowSelection && 'pl-4')}
+          />
         )}
       />
 

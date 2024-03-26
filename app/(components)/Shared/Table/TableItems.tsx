@@ -68,7 +68,7 @@ function TableItem<T>({ item }: { item: TableElement<T> }) {
   return Each({
     items: getKeys(labels),
     render: (key, index) => (
-      <td key={item.id.toString() + key.toString() + index} className={twMerge(visibilities ? visibilities[key] : '', !allowSelection && index === 0 && 'pl-4')}>
+      <td key={item.id.toString() + key.toString() + index} className={twMerge('pr-2', visibilities ? visibilities[key] : '', !allowSelection && index === 0 && 'pl-4')}>
         {item[key]}
       </td>
     ),
