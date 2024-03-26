@@ -8,6 +8,7 @@ import TableColumnLabels from '@/components/Shared/Table/TableColumnLabels'
 import TableItems from '@/components/Shared/Table/TableItems'
 import { motion } from 'framer-motion'
 import TableSearchBar from '@/components/Shared/Table/TableSearchBar'
+import TableSelectionButtons from '@/components/Shared/Table/TableSelectionButtons'
 
 const createGenericTableContext = once(<T,>() => createContext<T>({} as T))
 
@@ -25,34 +26,21 @@ export const useTableContext = <T,>() => useContext<TableContext<T>>(createGener
  * @param selectionButtons Buttons that are displayed above the table, that can be used to perform actions on the selected items.
  * @returns
  */
-export default function Table<T>({ items: initialItems, labels, noDefaultLabels, selectionButtons, ...props }: TableProps<T>) {
+export default function Table<T>(props: TableProps<T>) {
   const Context = createGenericTableContext<TableContext<T>>()
-  type Item = TableElement<T>
-  const defaultLabels = Object.keys(initialItems[0]).reduce((acc, key) => ({ ...acc, [key]: key }), {} as { [key in keyof Item]: string })
-
-  const [items, setItems] = useState(initialItems)
-  const [selected, setSelected] = useState<Item[]>([])
+  const ContextProps = useTableProps(props)
 
   return (
-    <Context.Provider
-      value={{
-        labels: Object.assign(noDefaultLabels ? {} : defaultLabels, labels),
-        initialItems,
-        items,
-        setItems,
-        selection: selected,
-        setSelection: setSelected,
-        ...props,
-      }}>
+    <Context.Provider value={ContextProps}>
       <div className='wrapper relative @container 2xs:mt-0'>
         <div className='flex items-end justify-end px-1 py-2'>
-          <div className={twMerge('flex flex-1 flex-wrap gap-2', selected.length === 0 && 'opacity-25')}>{selectionButtons}</div>
+          <TableSelectionButtons />
           <TableSearchBar className='flex-1' />
         </div>
         <table className='w-full rounded-md'>
           <thead className='bg-gray-700 py-2 text-left dark:bg-neutral-900'>
-            <tr className='space-x-24 text-gray-100 dark:text-gray-200'>
-              <th className='relative my-2 block h-8 min-w-16'>
+            <tr className='h-12 space-x-24 text-gray-100 dark:text-gray-200'>
+              <th className={twMerge('relative my-2 block h-8 min-w-16', !props.allowSelection && 'hidden')}>
                 <SelectAllCheckbox />
               </th>
 
@@ -66,6 +54,24 @@ export default function Table<T>({ items: initialItems, labels, noDefaultLabels,
       </div>
     </Context.Provider>
   )
+}
+
+function useTableProps<T>({ items: initialItems, labels, ...props }: TableProps<T>): TableContext<T> {
+  const defaultLabels = Object.keys(initialItems.at(0) ?? {}).reduce((acc, key) => ({ ...acc, [key]: key }), {} as { [key in keyof TableElement<T>]: string })
+  labels = Object.assign(props.noDefaultLabels ? {} : defaultLabels, labels)
+
+  const [items, setItems] = useState(initialItems)
+  const [selection, setSelection] = useState<TableElement<T>[]>([])
+
+  return {
+    initialItems,
+    labels,
+    items,
+    setItems,
+    selection,
+    setSelection,
+    ...props,
+  }
 }
 
 /**
