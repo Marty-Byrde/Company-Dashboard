@@ -9,7 +9,7 @@ import { twMerge } from 'tailwind-merge'
  * In case no labels are provided, the property-keys of the items are used as the column headings.
  * @constructor
  */
-export default function TableColumnLabels<T>() {
+export default function TableColumns<T>() {
   const { labels, visibilities, itemButtons, allowSelection } = useTableContext<T>()
   const visiblilty = (key: keyof TableVisibilities<T>) => (visibilities && visibilities.hasOwnProperty(key) ? visibilities[key] : '')
 

@@ -3,7 +3,7 @@
 import { createContext, useContext, useState } from 'react'
 import TableProps, { TableContext, TableElement } from '@/typings/Shared/Table/Types'
 import { once } from 'lodash'
-import TableColumnLabels from '@/components/Shared/Table/TableColumnLabels'
+import TableColumns from '@/components/Shared/Table/TableColumns'
 import TableItems from '@/components/Shared/Table/TableItems'
 import { motion } from 'framer-motion'
 import TableSearchBar from '@/components/Shared/Table/TableSearchBar'
@@ -38,7 +38,7 @@ export default function Table<T>(props: TableProps<T>) {
         </div>
         <table className='w-full rounded-md'>
           <thead className='bg-gray-700 py-2 text-left dark:bg-neutral-900'>
-            <TableColumnLabels />
+            <TableColumns />
           </thead>
           <motion.tbody initial='hidden' animate='visible' className='space-y-24 divide-y divide-gray-400 px-2 dark:divide-neutral-500'>
             <TableItems />
