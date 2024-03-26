@@ -16,9 +16,10 @@ export default async function ArticlesPage() {
       <h1 className='mb-6 text-2xl font-semibold'>Articles</h1>
 
       <Table<(typeof shownArticles)[number]>
+        allowSelection={true}
         selectionButtons={<ShowArticleHistoryButton />}
         labels={{ id: 'ID', name: 'Name', category: 'Category' }}
-        visibilities={{ id: 'hidden min-w-16 @xl:table-cell', name: 'w-[100%]', category: 'hidden text-nowrap pr-4 text-right @3xl:table-cell whitespace-nowrap' }}
+        visibilities={{ id: 'hidden min-w-24 @xl:table-cell', name: 'w-[100%]', category: 'hidden text-nowrap pr-4 text-right @3xl:table-cell whitespace-nowrap' }}
         noDefaultLabels
         items={shownArticles}
         searchFilter={['name', 'category']}
