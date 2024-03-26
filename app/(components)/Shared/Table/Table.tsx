@@ -1,7 +1,6 @@
 'use client'
 
 import { createContext, useContext, useState } from 'react'
-import { twMerge } from 'tailwind-merge'
 import TableProps, { TableContext, TableElement } from '@/typings/Shared/Table/Types'
 import { once } from 'lodash'
 import TableColumnLabels from '@/components/Shared/Table/TableColumnLabels'
@@ -39,13 +38,7 @@ export default function Table<T>(props: TableProps<T>) {
         </div>
         <table className='w-full rounded-md'>
           <thead className='bg-gray-700 py-2 text-left dark:bg-neutral-900'>
-            <tr className='h-12 space-x-24 text-gray-100 dark:text-gray-200'>
-              <th className={twMerge('relative my-2 block h-8 min-w-16', !props.allowSelection && 'hidden')}>
-                <SelectAllCheckbox />
-              </th>
-
-              <TableColumnLabels />
-            </tr>
+            <TableColumnLabels />
           </thead>
           <motion.tbody initial='hidden' animate='visible' className='space-y-24 divide-y divide-gray-400 px-2 dark:divide-neutral-500'>
             <TableItems />
@@ -72,39 +65,4 @@ function useTableProps<T>({ items: initialItems, labels, ...props }: TableProps<
     setSelection,
     ...props,
   }
-}
-
-/**
- * Renders a checkbox that de- or selects all the items that are currently displayed in the table.
- */
-function SelectAllCheckbox<T>({ className }: { className?: string }) {
-  const { items, selection, setSelection, initialItems } = useContext<TableContext<T>>(createGenericTableContext())
-
-  return (
-    <input
-      type='checkbox'
-      className={twMerge(
-        'absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded-md border-gray-300 text-indigo-600 hover:cursor-pointer focus:ring-indigo-600 dark:bg-neutral-600 dark:text-fuchsia-700 dark:checked:bg-fuchsia-700 dark:focus:ring-fuchsia-700',
-        className,
-      )}
-      checked={selection.length === initialItems.length || items.map((i) => !!selection.find((s) => s.id === i.id)).every(Boolean)}
-      onChange={() =>
-        setSelection((prev) => {
-          //* The displayed articles are a subset of the initial articles, as a search is active
-          if (items.length !== initialItems.length) {
-            //? if all the displayed articles are selected and the total-checkbox is clicked, then the displayed articles are removed from the selection.
-            if (items.map((i) => !!selection.find((s) => s.id === i.id)).every(Boolean)) {
-              return prev.filter((a) => !items.find((i) => i.id === a.id))
-            }
-
-            //? if not all the displayed articles are selected and the total-checkbox is clicked, then the displayed articles are added to the selection.
-            return [...prev, ...items.filter((i) => !prev.find((s) => s.id === i.id))]
-          }
-
-          //? When all the articles are displayed, thus no search is active, we can simply toggle the selection of all articles.
-          return prev.length === initialItems.length ? [] : initialItems
-        })
-      }
-    />
-  )
 }
