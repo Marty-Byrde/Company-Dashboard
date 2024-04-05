@@ -4,6 +4,8 @@ import useBackend from '@/hooks/Shared/Fetch/useBackend'
 import { Article } from 'hellocash-api/typings/Article'
 import Link from 'next/link'
 import InvoiceHistoryFeed from '@/components/Shared/Feeds/History/InvoiceHistoryFeed'
+import Each from '@/lib/Shared/Each'
+import getKeys from '@/lib/Shared/Keys'
 
 export default async function ArticlesBuyHistoryPage({ params }: { params: { ids?: string } }) {
   const original_invoices = await useBackend<Invoice[]>('/invoices?limit=-1', { next: { revalidate: 3600, tags: ['invoices'] } })
@@ -26,7 +28,7 @@ export default async function ArticlesBuyHistoryPage({ params }: { params: { ids
       </div>
 
       <div className='mb-24 flex flex-col gap-16'>
-        {Object.keys(groupedInvoices)?.map((customer_name) => <CustomerHistory key={customer_name} invoices={groupedInvoices[customer_name]} />)}
+        <Each items={getKeys(groupedInvoices)} render={(customer_name) => <CustomerHistory key={customer_name} invoices={groupedInvoices[customer_name]} />} />
       </div>
     </>
   )
@@ -65,14 +67,11 @@ async function CustomerHistory({ invoices }: { invoices: Invoice[] }) {
  */
 async function DisplayArticleSelection({ product_ids }: { product_ids: string[] }) {
   const articles = await useBackend<Article[]>('/articles', { next: { revalidate: 3600, tags: ['articles'] } })
+  const getName = (id: string) => articles.find((a) => a.id.toString() === id)?.name
 
   return (
     <ol className='ml-4 mt-4 flex list-decimal flex-col gap-2 pl-4 text-gray-400'>
-      {product_ids.map((id) => (
-        <li className='' key={id}>
-          {articles.find((a) => a.id.toString() === id)?.name}
-        </li>
-      ))}
+      <Each items={product_ids} render={(id) => <li key={id}>{getName(id)}</li>} />
     </ol>
   )
 }
