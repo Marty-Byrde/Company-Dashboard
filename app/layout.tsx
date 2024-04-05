@@ -30,8 +30,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthProvider>
           <SideBar />
           {/*  Children Container takes up the full height and width of the remaining space*/}
-          <div className={structureClasses('fixed inset-0 top-14 flex flex-col px-4 py-4 text-gray-700 dark:text-gray-200 lg:inset-y-0 lg:ml-72', lightBackground, darkBackground)}>
-            <div className='relative h-full w-full'>{children}</div>
+          <div className={structureClasses('fixed inset-0 top-14 text-gray-700 dark:text-gray-200 lg:inset-y-0 lg:ml-72', lightBackground, darkBackground)}>
+            <div className='relative h-full w-full overflow-y-auto px-4 py-4'>{children}</div>
           </div>
         </AuthProvider>
         <ToastContainer position='top-right' autoClose={3000} stacked />
