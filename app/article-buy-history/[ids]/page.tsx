@@ -1,11 +1,11 @@
 import { Invoice } from 'hellocash-api/typings/Invoice'
 import useBackend from '@/hooks/Shared/Fetch/useBackend'
-import { Article } from 'hellocash-api/typings/Article'
 import Link from 'next/link'
 import InvoiceHistoryFeed from '@/components/Shared/Feeds/History/InvoiceHistoryFeed'
 import Each from '@/lib/Shared/Each'
 import getKeys from '@/lib/Shared/Keys'
 import { notFound } from 'next/navigation'
+import ListSelectedArticles from '@/components/article-buy-history/[ids]/ListSelectedArticles'
 
 export default async function ArticlesBuyHistoryPage({ params }: { params: { ids?: string } }) {
   const original_invoices = await useBackend<Invoice[]>('/invoices?limit=-1', { next: { revalidate: 3600, tags: ['invoices'] } })
@@ -24,7 +24,7 @@ export default async function ArticlesBuyHistoryPage({ params }: { params: { ids
       <div className='mb-12'>
         <h1 className='text-xl font-semibold'>Displaying Buy History of the following Products:</h1>
         <h2 className='text-sm dark:text-gray-400'>Showing invoices that are within the last 4 years.</h2>
-        <DisplayArticleSelection product_ids={ids.map((id) => parseInt(id))} />
+        <ListSelectedArticles article_ids={ids.map((id) => parseInt(id))} />
       </div>
 
       <div className='mb-24 flex flex-col gap-16'>
@@ -57,22 +57,6 @@ async function CustomerHistory({ invoices }: { invoices: Invoice[] }) {
       </h2>
       <InvoiceHistoryFeed invoices={invoices} />
     </div>
-  )
-}
-
-/**
- * Retrieves the products-names based on the given ids and lists them in an ordered-list.
- * @param product_ids The ids of the requested / selected products.
- * @returns An ordered list of the requested product-names.
- */
-async function DisplayArticleSelection({ product_ids }: { product_ids: Array<number> }) {
-  const articles = await useBackend<Article[]>('/articles', { next: { revalidate: 3600, tags: ['articles'] } })
-  const getName = (id: (typeof product_ids)[number]) => articles.find((a) => a.id === id)?.name
-
-  return (
-    <ol className='ml-4 mt-4 flex list-decimal flex-col gap-2 pl-4 text-gray-400'>
-      <Each items={product_ids} render={(id) => <li key={id}>{getName(id)}</li>} />
-    </ol>
   )
 }
 
