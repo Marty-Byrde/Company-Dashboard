@@ -1,22 +1,17 @@
 import { Invoice } from 'hellocash-api/typings/Invoice'
-import useBackend from '@/hooks/Shared/Fetch/useBackend'
 import Link from 'next/link'
 import InvoiceHistoryFeed from '@/components/Shared/Feeds/History/InvoiceHistoryFeed'
 import Each from '@/lib/Shared/Each'
 import getKeys from '@/lib/Shared/Keys'
-import { notFound } from 'next/navigation'
 import ListSelectedArticles from '@/components/article-buy-history/[ids]/ListSelectedArticles'
+import parseArticleHistoryParams from '@/lib/articles/[ids]/parseArticleHistoryParams'
 
-export default async function ArticlesBuyHistoryPage({ params }: { params: { ids?: string } }) {
-  const original_invoices = await useBackend<Invoice[]>('/invoices?limit=-1', { next: { revalidate: 3600, tags: ['invoices'] } })
+export default async function ArticlesBuyHistoryPage({ params: searchParams }: { params: { ids?: string } }) {
+  const { invoices, ids } = await parseArticleHistoryParams({
+    searchParams,
+    setFilter: (ids) => ({ includesItemsOnly: ids, maxYears: 4, hasCustomer: true }),
+  })
 
-  if (!params.ids) return notFound()
-  const ids = params.ids.split('%2C')
-
-  //? Check whether a set of ids is given and whether all the ids are indeed numbers
-  if (!ids || ids.length === 0 || ids.map((id) => parseInt(id) > 0).every((v) => !v)) return <div>No Articles were selected...</div>
-
-  const invoices = filterInvoices(original_invoices, ids, 4, true)
   const groupedInvoices = groupInvoices(invoices)
 
   return (
@@ -24,7 +19,7 @@ export default async function ArticlesBuyHistoryPage({ params }: { params: { ids
       <div className='mb-12'>
         <h1 className='text-xl font-semibold'>Displaying Buy History of the following Products:</h1>
         <h2 className='text-sm dark:text-gray-400'>Showing invoices that are within the last 4 years.</h2>
-        <ListSelectedArticles article_ids={ids.map((id) => parseInt(id))} />
+        <ListSelectedArticles article_ids={ids} />
       </div>
 
       <div className='mb-24 flex flex-col gap-16'>
@@ -78,33 +73,4 @@ function groupInvoices(invoices: Invoice[]): GroupedInvoices {
     group[id].push(invoice)
     return group
   }, {})
-}
-
-/**
- * Filters the invoices by the given parameters
- * @param invoices The invoices to be filtered
- * @param product_ids Filters the invoices by their items, thus only invoices that contain the given product_ids remain
- * @param year_difference The max. difference in years between the current year and the invoice's year
- * @param givenProductsOnly If true, only the requested products whoose ids match the given ids in the remaining invoices remain
- */
-function filterInvoices(invoices: Invoice[], product_ids: string[] = [], year_difference: number = 3, givenProductsOnly: boolean = false) {
-  //? Only valid invoices
-  invoices = invoices.filter((i) => !!i.customer)
-
-  //? Filter out those invoices that have the requested items / articles
-  invoices = invoices.filter((i) => i.items.filter((item) => product_ids.includes(item.id.toString())).length > 0)
-
-  //? Only invoices of the past <year_difference> years
-  invoices = invoices.filter((i) => new Date(i.timestamp).getFullYear() >= new Date().getFullYear() - Math.abs(year_difference))
-
-  if (givenProductsOnly) {
-    //? remove the items that are not in the requested list
-    invoices = invoices.map((i) =>
-      Object.assign({}, i, {
-        items: i.items.filter((item) => product_ids.includes(item.id.toString())),
-      }),
-    )
-  }
-
-  return invoices
 }
