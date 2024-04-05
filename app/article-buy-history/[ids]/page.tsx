@@ -3,7 +3,7 @@ import { Invoice } from 'hellocash-api/typings/Invoice'
 import useBackend from '@/hooks/Shared/Fetch/useBackend'
 import { Article } from 'hellocash-api/typings/Article'
 import Link from 'next/link'
-import CustomerBuyHistory from '@/app/customer-history/[cid]/CustomerBuyHistory'
+import InvoiceHistoryFeed from '@/components/Shared/Feeds/History/InvoiceHistoryFeed'
 
 export default async function ArticlesBuyHistoryPage({ params }: { params: { ids?: string } }) {
   const original_invoices = await useBackend<Invoice[]>('/invoices?limit=-1', { next: { revalidate: 3600, tags: ['invoices'] } })
@@ -53,7 +53,7 @@ async function ShowCustomerHistory({ invoices }: { invoices: Invoice[] }) {
           {name}
         </Link>
       </h2>
-      <CustomerBuyHistory key={name + 'history'} invoices={invoices} />
+      <InvoiceHistoryFeed invoices={invoices} />
     </div>
   )
 }
