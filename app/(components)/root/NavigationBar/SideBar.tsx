@@ -24,6 +24,11 @@ export default async function SideBar() {
         icon: 'TableCellsIcon',
         href: '/articles',
       },
+      {
+        name: 'Customers',
+        icon: 'UsersIcon',
+        href: '/customers',
+      },
     ],
   }
   const managementElements: SideElementProps[] = [
