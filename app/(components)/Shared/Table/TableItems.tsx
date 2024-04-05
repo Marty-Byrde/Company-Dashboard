@@ -45,9 +45,10 @@ export default function TableItems<T>() {
 
 function SelectCheckBox<T>({ item }: { item: TableElement<T> }) {
   const { isSelected, toggleSelection } = useTableSelection<T>()
+  const { allowSelection } = useTableContext<T>()
 
   return (
-    <td className='relative min-w-12'>
+    <td className={twMerge('relative min-w-12', !allowSelection && 'hidden')}>
       {isSelected(item) && <div className='absolute inset-y-0 left-0 w-0.5 bg-indigo-600 dark:bg-fuchsia-700' />}
 
       <input
@@ -62,12 +63,12 @@ function SelectCheckBox<T>({ item }: { item: TableElement<T> }) {
 }
 
 function TableItem<T>({ item }: { item: TableElement<T> }) {
-  const { labels, visibilities } = useTableContext<T>()
+  const { labels, visibilities, allowSelection } = useTableContext<T>()
 
   return Each({
     items: getKeys(labels),
     render: (key, index) => (
-      <td key={item.id.toString() + key.toString() + index} className={twMerge(visibilities ? visibilities[key] : '')}>
+      <td key={item.id.toString() + key.toString() + index} className={twMerge('pr-2', visibilities ? visibilities[key] : '', !allowSelection && index === 0 && 'pl-4')}>
         {item[key]}
       </td>
     ),
@@ -79,5 +80,5 @@ function ItemButtons<T>({ item }: { item: TableElement<T> }) {
 
   if (!buttons) return null
 
-  return <td className={twMerge(visibilities?.itemButtons)}>{buttons(item)}</td>
+  return <td className={twMerge(visibilities?.itemButtons)}>{buttons({ item })}</td>
 }
