@@ -18,7 +18,7 @@ export default async function ArticlesBuyHistoryPage({ params }: { params: { ids
   const groupedInvoices = groupInvoices(invoices)
 
   return (
-    <div className='flex flex-col gap-4'>
+    <>
       <div className='mb-12'>
         <h1 className='text-xl font-semibold'>Displaying Buy History of the following Products:</h1>
         <h2 className='text-sm dark:text-gray-400'>Showing invoices that are within the last 4 years.</h2>
@@ -26,9 +26,9 @@ export default async function ArticlesBuyHistoryPage({ params }: { params: { ids
       </div>
 
       <div className='mb-24 flex flex-col gap-16'>
-        {Object.keys(groupedInvoices)?.map((customer_name) => <ShowCustomerHistory key={customer_name} invoices={groupedInvoices[customer_name]} />)}
+        {Object.keys(groupedInvoices)?.map((customer_name) => <CustomerHistory key={customer_name} invoices={groupedInvoices[customer_name]} />)}
       </div>
-    </div>
+    </>
   )
 }
 
@@ -39,7 +39,7 @@ export default async function ArticlesBuyHistoryPage({ params }: { params: { ids
  * @param invoices The array of invoices whoose history is to be displayed.
  * @returns A container that includes a heading with the customer's name and the history based the given invoices.
  */
-async function ShowCustomerHistory({ invoices }: { invoices: Invoice[] }) {
+async function CustomerHistory({ invoices }: { invoices: Invoice[] }) {
   if (invoices.length === 0) return null
 
   const { id, firstName, lastName } = invoices.at(0)!.customer!
