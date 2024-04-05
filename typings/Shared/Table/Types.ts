@@ -38,7 +38,7 @@ export default interface TableProps<T> {
 
   allowSelection?: boolean
   selectionButtons?: ReactNode | ReactNode[]
-  itemButtons?: (item: TableElement<T>) => ReactNode
+  itemButtons?: ({ item }: { item: TableElement<T> }) => ReactNode
 }
 
 export interface TableContext<T> extends TableProps<T> {

@@ -80,5 +80,5 @@ function ItemButtons<T>({ item }: { item: TableElement<T> }) {
 
   if (!buttons) return null
 
-  return <td className={twMerge(visibilities?.itemButtons)}>{buttons(item)}</td>
+  return <td className={twMerge(visibilities?.itemButtons)}>{buttons({ item })}</td>
 }
