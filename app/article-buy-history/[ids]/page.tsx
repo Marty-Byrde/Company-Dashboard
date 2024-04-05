@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation'
 import { Invoice } from 'hellocash-api/typings/Invoice'
 import useBackend from '@/hooks/Shared/Fetch/useBackend'
 import { Article } from 'hellocash-api/typings/Article'
@@ -6,6 +5,7 @@ import Link from 'next/link'
 import InvoiceHistoryFeed from '@/components/Shared/Feeds/History/InvoiceHistoryFeed'
 import Each from '@/lib/Shared/Each'
 import getKeys from '@/lib/Shared/Keys'
+import { notFound } from 'next/navigation'
 
 export default async function ArticlesBuyHistoryPage({ params }: { params: { ids?: string } }) {
   const original_invoices = await useBackend<Invoice[]>('/invoices?limit=-1', { next: { revalidate: 3600, tags: ['invoices'] } })
@@ -44,15 +44,15 @@ export default async function ArticlesBuyHistoryPage({ params }: { params: { ids
 async function CustomerHistory({ invoices }: { invoices: Invoice[] }) {
   if (invoices.length === 0) return null
 
-  const { id, firstName, lastName } = invoices.at(0)!.customer!
-  const name = `${firstName} ${lastName}`
+  const customer = invoices.at(0)?.customer
+  const name = `${customer?.firstName} ${customer?.lastName}`.trim()
 
   return (
     <div>
       <h2 className='mb-4 text-lg font-semibold'>
         History for:
-        <Link className='ml-2 decoration-2 hover:underline' href={`/customer-history/${id}`}>
-          {name}
+        <Link className='ml-2 decoration-2 hover:underline' href={`/customer-history/${customer?.id}`}>
+          {name ? name : 'Unknown Customer'}
         </Link>
       </h2>
       <InvoiceHistoryFeed invoices={invoices} />
@@ -87,7 +87,9 @@ interface GroupedInvoices {
  */
 function groupInvoices(invoices: Invoice[]): GroupedInvoices {
   return invoices.reduce((group: GroupedInvoices, invoice) => {
-    const id = invoice!.customer!.firstName + ' ' + invoice!.customer!.lastName
+    const nameTuple = `${invoice.customer?.firstName ?? ''} ${invoice.customer?.lastName ?? ''}`
+    const id = nameTuple.trim().length > 0 ? nameTuple : 'Unknown Customer'
+
     group[id] = group[id] ?? []
     group[id].push(invoice)
     return group
