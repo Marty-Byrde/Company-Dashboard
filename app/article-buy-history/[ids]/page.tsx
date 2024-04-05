@@ -6,10 +6,12 @@ import getKeys from '@/lib/Shared/Keys'
 import ListSelectedArticles from '@/components/article-buy-history/[ids]/ListSelectedArticles'
 import parseArticleHistoryParams from '@/lib/articles/[ids]/parseArticleHistoryParams'
 
+const MAX_YEARS_DIFFERENCE = 4
+
 export default async function ArticlesBuyHistoryPage({ params: searchParams }: { params: { ids?: string } }) {
   const { invoices, ids } = await parseArticleHistoryParams({
     searchParams,
-    setFilter: (ids) => ({ includesItemsOnly: ids, maxYears: 4, hasCustomer: true }),
+    setFilter: (ids) => ({ includesItemsOnly: ids, maxYears: MAX_YEARS_DIFFERENCE, hasCustomer: true }),
   })
 
   const groupedInvoices = groupInvoices(invoices)
@@ -18,7 +20,7 @@ export default async function ArticlesBuyHistoryPage({ params: searchParams }: {
     <>
       <div className='mb-12'>
         <h1 className='text-xl font-semibold'>Displaying Buy History of the following Products:</h1>
-        <h2 className='text-sm dark:text-gray-400'>Showing invoices that are within the last 4 years.</h2>
+        <h2 className='text-sm dark:text-gray-400'>Showing invoices that are within the last {MAX_YEARS_DIFFERENCE} years.</h2>
         <ListSelectedArticles article_ids={ids} />
       </div>
 
