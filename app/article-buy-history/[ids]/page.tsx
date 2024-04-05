@@ -24,7 +24,7 @@ export default async function ArticlesBuyHistoryPage({ params }: { params: { ids
       <div className='mb-12'>
         <h1 className='text-xl font-semibold'>Displaying Buy History of the following Products:</h1>
         <h2 className='text-sm dark:text-gray-400'>Showing invoices that are within the last 4 years.</h2>
-        <DisplayArticleSelection product_ids={ids} />
+        <DisplayArticleSelection product_ids={ids.map((id) => parseInt(id))} />
       </div>
 
       <div className='mb-24 flex flex-col gap-16'>
@@ -65,9 +65,9 @@ async function CustomerHistory({ invoices }: { invoices: Invoice[] }) {
  * @param product_ids The ids of the requested / selected products.
  * @returns An ordered list of the requested product-names.
  */
-async function DisplayArticleSelection({ product_ids }: { product_ids: string[] }) {
+async function DisplayArticleSelection({ product_ids }: { product_ids: Array<number> }) {
   const articles = await useBackend<Article[]>('/articles', { next: { revalidate: 3600, tags: ['articles'] } })
-  const getName = (id: string) => articles.find((a) => a.id.toString() === id)?.name
+  const getName = (id: (typeof product_ids)[number]) => articles.find((a) => a.id === id)?.name
 
   return (
     <ol className='ml-4 mt-4 flex list-decimal flex-col gap-2 pl-4 text-gray-400'>
