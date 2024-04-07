@@ -1,8 +1,8 @@
 import getHellocashAPI from '@/lib/Shared/HelloCash'
-import CustomerBuyHistory from '@/app/customer-history/[cid]/CustomerBuyHistory'
 import { notFound } from 'next/navigation'
 import { Invoice } from 'hellocash-api/typings/Invoice'
 import useBackend from '@/hooks/Shared/Fetch/useBackend'
+import InvoiceHistoryFeed from '@/components/Shared/Feeds/History/InvoiceHistoryFeed'
 
 export default async function CustomerHistoryPage({ params }: { params: { cid?: string } }) {
   let invoices = await useBackend<Invoice[]>('/invoices?limit=-1', { next: { revalidate: 3600 * 24, tags: ['invoices'] } })
@@ -15,5 +15,5 @@ export default async function CustomerHistoryPage({ params }: { params: { cid?: 
 
   invoices = invoices.filter((i) => i.customer?.id == customer.id)
 
-  return <CustomerBuyHistory invoices={invoices} />
+  return <InvoiceHistoryFeed invoices={invoices} />
 }
