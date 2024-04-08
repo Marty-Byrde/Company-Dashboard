@@ -42,7 +42,7 @@ export default async function InvoiceHistoryFeed({
           <>
             <Feed
               key={invoice.id}
-              link={`/invoices/${invoice._id}`}
+              link={`/invoices/pdf/${invoice._id}`}
               icon={invoiceIcon(invoice)}
               title={'#' + invoice.id.toString()}
               description={invoiceDescription(invoice)}
