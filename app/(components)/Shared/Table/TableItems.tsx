@@ -14,7 +14,7 @@ const animationVariants = {
     opacity: 1,
     borderStyle: 'solid',
     transition: {
-      delay: i * 0.02, // staggered effect with an incremental delay
+      delay: i < 50 ? i * 0.02 : 0, // staggered effect with an incremental delay
     },
   }),
 }
