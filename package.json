@@ -6,7 +6,8 @@
     "dev": "next dev -p 80 --turbo",
     "build": "next build",
     "start": "next start -p 80",
-    "lint": "next lint"
+    "lint": "next lint",
+    "compile": "npm run build && npm run start"
   },
   "dependencies": {
     "@algolia/autocomplete-core": "^1.13.0",
@@ -19,11 +20,14 @@
     "date-fns": "^3.3.1",
     "framer-motion": "^11.0.20",
     "hellocash-api": "1.0.4",
+    "install": "^0.13.0",
     "lodash": "^4.17.21",
     "mongodb": "^6.3.0",
     "next": "14.1.0",
     "next-auth": "^4.24.5",
     "nookies": "^2.5.2",
+    "npm": "^10.5.1",
+    "primeicons": "^7.0.0",
     "react": "^18",
     "react-dom": "^18",
     "react-highlight-words": "^0.20.0",

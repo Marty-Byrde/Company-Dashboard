@@ -29,6 +29,11 @@ export default async function SideBar() {
         icon: 'UsersIcon',
         href: '/customers',
       },
+      {
+        name: 'Invoices',
+        icon: 'ReceiptRefundIcon',
+        href: '/invoices',
+      },
     ],
   }
   const managementElements: SideElementProps[] = [
