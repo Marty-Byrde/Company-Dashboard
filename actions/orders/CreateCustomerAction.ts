@@ -9,7 +9,8 @@ interface SuccessReponse {
 
 interface ErrorResponse {
   status: 'error'
-  duplicates: Customer[]
+  duplicates?: Customer[]
+  error?: unknown
 }
 
 export default async function CreateCustomerAction(customer: Partial<Customer>): Promise<SuccessReponse | ErrorResponse> {
@@ -29,10 +30,11 @@ export default async function CreateCustomerAction(customer: Partial<Customer>):
   customer.notes?.push(`Automatisch erstellt am ${getCurrentDate()}`)
   customer.notes?.push(`Erstellt von Company-Dashboard`)
 
-  return {
-    status: 'sucess',
-    response: await createUser(customer),
-  }
+  console.log('Going to create a new customer...')
+
+  return await createUser(customer)
+    .then((response) => ({ status: 'sucess', response: response }) satisfies SuccessReponse)
+    .catch((err) => ({ status: 'error', error: err }) satisfies ErrorResponse)
 }
 
 function getCurrentDate() {
