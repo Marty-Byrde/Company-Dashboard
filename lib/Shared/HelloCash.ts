@@ -1,4 +1,4 @@
-import * as api from 'hellocash-api/'
+import * as api from 'hellocash-api/dist/index'
 import { setAuthorization } from 'hellocash-api/dist/api/Config'
 
 export default function getHellocashAPI() {

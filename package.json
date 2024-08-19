@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev -p 80 --turbo",
     "build": "next build",
-    "start": "next start -p 80",
+    "start": "next start",
+    "production": "[ -e .env ] && set -a && . ./.env; next start",
     "lint": "next lint",
     "compile": "npm run build && npm run start"
   },
@@ -19,7 +20,7 @@
     "@types/lodash": "^4.14.202",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.0.20",
-    "hellocash-api": "1.0.4",
+    "hellocash-api": "^1.0.5",
     "install": "^0.13.0",
     "lodash": "^4.17.21",
     "mongodb": "^6.3.0",

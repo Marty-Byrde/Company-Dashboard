@@ -2295,14 +2295,14 @@ hasown@^2.0.0:
   dependencies:
     function-bind "^1.1.2"
 
-hellocash-api@1.0.4:
-  version "1.0.4"
-  resolved "http://10.0.100.10:4873/hellocash-api/-/hellocash-api-1.0.4.tgz#3cb8c3112663eec04afdc412df96ece938604e7b"
-  integrity sha512-dW+dOtqTNEBnC/3fLDfi+xTVCC3SMPRYDJUfmC5Jo9dwlbTM/4G9JIiIKwA0KW0DwV4UQQzqkhUJYKhn6cpamQ==
+hellocash-api@^1.0.5:
+  version "1.0.5"
+  resolved "http://10.0.100.10:4873/hellocash-api/-/hellocash-api-1.0.5.tgz#08b9946bcf4ed8c8a8bbf38726e5515ee5b9597c"
+  integrity sha512-esArqda7z6x6SqC3SBVuS90rMY6fcGiUSB+M3jF1P1cm1L2vEA2wv19Ej3TJ3GQpsud1hq+ts8hhVhbsUZz2Iw==
   dependencies:
     fetch "^1.1.0"
     node-fetch "^3.3.2"
-    prettier "^3.1.1"
+    zod "^3.23.5"
 
 highlight-words-core@^1.2.0:
   version "1.2.2"
@@ -4949,3 +4949,8 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zod@^3.23.5:
+  version "3.23.8"
+  resolved "http://10.0.100.10:4873/zod/-/zod-3.23.8.tgz#e37b957b5d52079769fb8097099b592f0ef4067d"
+  integrity sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==
