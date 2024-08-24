@@ -6,7 +6,7 @@ import { existsSync, mkdirSync } from 'node:fs'
 import { createFileTransport } from '@/lib/Shared/Logs/LoggerTransports'
 import env from '@/lib/root/Environment'
 
-const isSilent = !!env.WINSTON_SILENT
+const isSilent = env.WINSTON_SILENT.toLowerCase().trim() === 'true'
 
 // Create the logs directory if it doesn't exist
 existsSync('./logs') || mkdirSync('./logs')
@@ -91,3 +91,5 @@ export const logDebug = async (message: LoggingProps['message'], ...args: Loggin
  *  @param args - Additional arguments to be logged, which can be again strings, numbers or objects
  */
 export const logVerbose = async (message: LoggingProps['message'], ...args: LoggingProps['args']) => logMessage('verbose', message, args)
+
+logInfo(`Winston Transports have been ${isSilent ? 'disabled' : 'enabled'}`)
