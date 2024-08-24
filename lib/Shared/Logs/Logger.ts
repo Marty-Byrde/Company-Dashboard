@@ -4,8 +4,9 @@ import { createLogger } from 'winston'
 import { CONSOLE_FORMAT } from '@/lib/Shared/Logs/LoggerFormats'
 import { existsSync, mkdirSync } from 'node:fs'
 import { createFileTransport } from '@/lib/Shared/Logs/LoggerTransports'
+import env from '@/lib/root/Enviroment'
 
-const isSilent = !!process.env.WINSTON_SILENT
+const isSilent = !!env.WINSTON_SILENT
 
 // Create the logs directory if it doesn't exist
 existsSync('./logs') || mkdirSync('./logs')

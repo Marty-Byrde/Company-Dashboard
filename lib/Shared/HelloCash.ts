@@ -1,10 +1,11 @@
 import * as api from 'hellocash-api/dist/index'
 import { setAuthorization } from 'hellocash-api/dist/api/Config'
+import env from '@/lib/root/Enviroment'
+
+const { HELLOCASH_TOKEN } = env
 
 export default function getHellocashAPI() {
-  if (!process.env.HELLOCASH_TOKEN) throw new ReferenceError('Missing HelloCash Authorization Token')
-
-  setAuthorization(process.env.HELLOCASH_TOKEN)
+  setAuthorization(HELLOCASH_TOKEN)
 
   return api
 }

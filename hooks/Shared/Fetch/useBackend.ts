@@ -1,3 +1,5 @@
+import env from '@/lib/root/Enviroment'
+
 /**
  * This hook makes a fetch request to the backend and the given subroute with the given options
  * @param route The subroute to the backend. (..../api/<route>)
@@ -8,7 +10,7 @@ export default async function useBackend<T = unknown>(route: string | 'orders', 
   if (route.startsWith('api')) route = route.slice(3)
   if (!route.startsWith('/')) route = '/' + route
 
-  return fetch(`${process.env.BACKEND}${route}`, options)
+  return fetch(`${env.BACKEND}${route}`, options)
     .then((res) => res.json())
     .then((json) => json as T)
 }

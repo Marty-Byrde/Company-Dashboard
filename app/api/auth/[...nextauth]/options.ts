@@ -2,11 +2,9 @@ import type { NextAuthOptions } from 'next-auth'
 import GitHubProvider from 'next-auth/providers/github'
 import { MongoDBAdapter } from '@auth/mongodb-adapter'
 import clientPromise from '@/app/api/auth/[...nextauth]/mongoDBClientPromise'
+import env from '@/lib/root/Enviroment'
 
-const { GITHUB_ID, GITHUB_SECRET, NEXTAUTH_DB } = process.env
-
-if (!GITHUB_ID || !GITHUB_SECRET) throw new Error('Missing Github Credentials...')
-if (!NEXTAUTH_DB) throw new Error('Missing Next-Auth MongoDB Credentials...')
+const { GITHUB_ID, GITHUB_SECRET, NEXTAUTH_DB } = env
 
 export const options: NextAuthOptions = {
   providers: [
