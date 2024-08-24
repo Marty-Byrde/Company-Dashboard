@@ -5,7 +5,7 @@ import CustomerRegistrationMenu from '../(components)/orders/CustomerRegistratio
 import RegistrationProvider from '../(components)/orders/RegistrationProvider'
 import DisplayOrder, { DisplayOrderHeaders } from '@/components/orders/DisplayOrder'
 import Order from 'woocommerce-utils/helper/typings/Order'
-import env from '@/lib/root/Enviroment'
+import env from '@/lib/root/Environment'
 
 export default async function OrdersPage() {
   const orders = await fetch(`${env.BACKEND}/orders?limit=25`, { next: { revalidate: 60 } })

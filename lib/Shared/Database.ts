@@ -1,5 +1,5 @@
 import { Db, MongoClient } from 'mongodb'
-import env from '@/lib/root/Enviroment'
+import env from '@/lib/root/Environment'
 
 async function connect() {
   const { DATABASE_HOST, DATABASE_PORT, DATABASE_NAME } = env

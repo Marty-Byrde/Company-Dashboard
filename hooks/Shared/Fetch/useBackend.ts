@@ -1,4 +1,4 @@
-import env from '@/lib/root/Enviroment'
+import env from '@/lib/root/Environment'
 
 /**
  * This hook makes a fetch request to the backend and the given subroute with the given options

@@ -4,7 +4,7 @@ import { createLogger } from 'winston'
 import { CONSOLE_FORMAT } from '@/lib/Shared/Logs/LoggerFormats'
 import { existsSync, mkdirSync } from 'node:fs'
 import { createFileTransport } from '@/lib/Shared/Logs/LoggerTransports'
-import env from '@/lib/root/Enviroment'
+import env from '@/lib/root/Environment'
 
 const isSilent = !!env.WINSTON_SILENT
 

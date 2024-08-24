@@ -2,7 +2,7 @@ import type { NextAuthOptions } from 'next-auth'
 import GitHubProvider from 'next-auth/providers/github'
 import { MongoDBAdapter } from '@auth/mongodb-adapter'
 import clientPromise from '@/app/api/auth/[...nextauth]/mongoDBClientPromise'
-import env from '@/lib/root/Enviroment'
+import env from '@/lib/root/Environment'
 
 const { GITHUB_ID, GITHUB_SECRET, NEXTAUTH_DB } = env
 

@@ -1,6 +1,6 @@
 import * as api from 'hellocash-api/dist/index'
 import { setAuthorization } from 'hellocash-api/dist/api/Config'
-import env from '@/lib/root/Enviroment'
+import env from '@/lib/root/Environment'
 
 const { HELLOCASH_TOKEN } = env
 

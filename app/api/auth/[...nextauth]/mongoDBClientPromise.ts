@@ -1,5 +1,5 @@
 import { MongoClient, MongoClientOptions } from 'mongodb'
-import env from '@/lib/root/Enviroment'
+import env from '@/lib/root/Environment'
 
 const uri = env.MONGODB_URI
 const options: MongoClientOptions = {}
