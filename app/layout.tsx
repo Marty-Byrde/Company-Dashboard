@@ -7,6 +7,7 @@ import { useColorModeValue } from '@/lib/Shared/ColorModeHandler'
 import AuthProvider from '@/app/(components)/root/AuthProvider'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { validateEnv } from '@/lib/root/Enviroment'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,6 +24,7 @@ const ColorSettings = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const { lightBackground, darkBackground, raw_darkBackground } = ColorSettings
+  validateEnv()
 
   return (
     <html lang='en' className={structureClasses(useColorModeValue(lightBackground, `dark ${raw_darkBackground}`), '')}>
