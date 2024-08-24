@@ -18,6 +18,7 @@
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.7",
     "@types/lodash": "^4.14.202",
+    "caniuse-lite": "^1.0.30001651",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.0.20",
     "hellocash-api": "^1.0.5",
