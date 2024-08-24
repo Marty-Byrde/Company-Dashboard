@@ -1,6 +1,7 @@
 'use server'
 import { Customer, RawCustomers } from 'hellocash-api/typings/Customer'
 import getHellocashAPI from '@/lib/Shared/HelloCash'
+import { logVerbose, logWarning } from '@/lib/Shared/Logs/Logger'
 
 interface SuccessReponse {
   status: 'sucess'
@@ -21,6 +22,7 @@ export default async function CreateCustomerAction(customer: Partial<Customer>):
   const duplicates = await findExactCustomer({ firstName, lastName, country, city, postCode, street, houseNumber })
 
   if (duplicates.length > 0) {
+    logWarning(`[CreateCustomerAction]: Customer (${firstName} ${lastName}) already exists ${duplicates.length} duplicates found.`)
     return {
       status: 'error',
       duplicates: duplicates,
@@ -30,11 +32,15 @@ export default async function CreateCustomerAction(customer: Partial<Customer>):
   customer.notes?.push(`Automatisch erstellt am ${getCurrentDate()}`)
   customer.notes?.push(`Erstellt von Company-Dashboard`)
 
-  console.log('Going to create a new customer...')
-
   return await createUser(customer)
-    .then((response) => ({ status: 'sucess', response: response }) satisfies SuccessReponse)
-    .catch((err) => ({ status: 'error', error: err }) satisfies ErrorResponse)
+    .then((response) => {
+      logVerbose(`[CreateCustomerAction]: Customer (${firstName} ${lastName}) created successfully`)
+      return { status: 'sucess', response: response } satisfies SuccessReponse
+    })
+    .catch((err) => {
+      logWarning(`[CreateCustomerAction]: Customer (${firstName} ${lastName}) could not be created`, err)
+      return { status: 'error', error: err } satisfies ErrorResponse
+    })
 }
 
 function getCurrentDate() {
