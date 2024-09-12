@@ -4,7 +4,7 @@ import Table from '@/components/Shared/Table/Table'
 import InvoicePDFButton from '@/components/invoices/InvoicePDFButton'
 
 export default async function InvoicesPage() {
-  let invoices = await useBackend<Invoice[]>('/invoices?limit=-1', { next: { revalidate: 3600 * 24, tags: ['invoices'] } })
+  let invoices = await useBackend<Invoice[]>('/invoices?limit=100', { next: { revalidate: 3600 * 24, tags: ['invoices'] } })
 
   let tablarizedInvoices = invoices
     .map((invoice) => ({
@@ -23,7 +23,7 @@ export default async function InvoicesPage() {
 
   return (
     <>
-      <h1 className='mb-6 text-2xl font-semibold'>Articles</h1>
+      <h1 className='mb-6 text-2xl font-semibold'>Invoices</h1>
 
       <Table<(typeof tablarizedInvoices)[number]>
         itemButtons={InvoicePDFButton}
